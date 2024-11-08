@@ -27,7 +27,6 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await notificationService.handleBackgroundMessage(message);
 }
 
-
 class FirebaseNotificationService {
   static FirebaseNotificationService? _instance;
   static FirebaseNotificationService get instance =>
@@ -40,8 +39,6 @@ class FirebaseNotificationService {
 
   // Private constructor
   FirebaseNotificationService._();
-
-
 
   // Setup notifications
   Future<void> setup() async {
@@ -166,12 +163,8 @@ class FirebaseNotificationService {
     );
   }
 
-
-
-
-
   // Navigate to notification screen
-  void _navigateToNotificationScreen(NotificationPayload payload) {   
+  void _navigateToNotificationScreen(NotificationPayload payload) {
     // AppRouter2.router.go('/test2/123');
     AppRouter.router.go(
       AppRoutePaths.notifications,
@@ -182,7 +175,6 @@ class FirebaseNotificationService {
       },
     );
   }
-
 
 // void _navigateToNotificationScreen(NotificationPayload payload) {
 //   final authCubit = GetIt.instance<AuthCubit>();
@@ -202,7 +194,6 @@ class FirebaseNotificationService {
 //     AppRouter.router.go(AppRoutePaths.login);
 //   }
 // }
-
 
   // Save token to preferences
   Future<void> _saveTokenToPrefs(String? token) async {
@@ -241,4 +232,3 @@ class FirebaseNotificationService {
     }
   }
 }
-
