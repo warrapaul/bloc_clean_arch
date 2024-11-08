@@ -1,4 +1,4 @@
-import 'package:bloc_clean_arch/core/configs/theme/app_colors.dart';
+import 'package:bloc_clean_arch/core/configs/del_theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {

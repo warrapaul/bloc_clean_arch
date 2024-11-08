@@ -1,4 +1,4 @@
-package com.example.bloc_clean_arch
+package com.bloc.clean
 
 import io.flutter.embedding.android.FlutterActivity
 

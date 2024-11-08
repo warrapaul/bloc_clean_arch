@@ -1,5 +1,5 @@
 import 'package:bloc_clean_arch/common/bloc/button/button_cubit.dart';
-import 'package:bloc_clean_arch/common/widgets/button/basic_app_button.dart';
+import 'package:bloc_clean_arch/common/widgets/bloc_button/basic_app_button.dart';
 import 'package:bloc_clean_arch/core/configs/routes/app_routes.dart';
 import 'package:bloc_clean_arch/features/auth/data/model/signup_req_params.dart';
 import 'package:bloc_clean_arch/features/auth/domain/usecase/signup.dart';
@@ -33,7 +33,7 @@ class SignupPage extends StatelessWidget {
               listener: (context, state) {
                 if (state is ButtonSucess) {
                   context.read<AuthCubit>().loginSuccessful();
-                  context.goNamed(AppRoutes.home);
+                  context.goNamed(AppRoutePaths.home);
                 }
                 if (state is ButtonFailure) {
                   var snackBar = SnackBar(content: Text(state.errorMessage));
@@ -118,14 +118,14 @@ class SignupPage extends StatelessWidget {
                                     decoration: TextDecoration.underline),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    context.goNamed(AppRoutes.login);
+                                    context.goNamed(AppRoutePaths.login);
                                   },
                               ),
                               const TextSpan(text: 'here'),
                             ],
                           ),
                         ),
-                         const SizedBox(
+                        const SizedBox(
                           height: 40,
                         ),
                       ],

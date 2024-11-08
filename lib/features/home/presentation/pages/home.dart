@@ -8,7 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class HomePage extends StatelessWidget {
+
   const HomePage({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class HomePage extends StatelessWidget {
             listener: (context, buttonState) {
               if (buttonState is ButtonSucess) {
                 // Navigate to login page after successful logout
-                context.goNamed(AppRoutes.login);
+                context.goNamed(AppRoutePaths.login);
               } else if (buttonState is ButtonFailure) {
                 // Show error message
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -65,9 +67,15 @@ class HomePage extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          context.goNamed(AppRoutes.profile);
+                          context.goNamed(AppRoutePaths.profile);
                         },
                         child: const Text('Profile'),
+                      ),
+                      FilledButton(
+                        onPressed: (){
+                         context.pushNamed(AppRoutePaths.cWidgets);
+                        },
+                        child: Text('Custom Widgets')
                       ),
                       if (userProfileState is UserProfileLoaded) ...[
                         const SizedBox(height: 20),

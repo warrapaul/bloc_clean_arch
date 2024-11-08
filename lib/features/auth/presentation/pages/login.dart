@@ -1,5 +1,5 @@
 import 'package:bloc_clean_arch/common/bloc/button/button_cubit.dart';
-import 'package:bloc_clean_arch/common/widgets/button/basic_app_button.dart';
+import 'package:bloc_clean_arch/common/widgets/bloc_button/basic_app_button.dart';
 import 'package:bloc_clean_arch/core/configs/routes/app_routes.dart';
 import 'package:bloc_clean_arch/features/auth/data/model/login_req_params.dart';
 import 'package:bloc_clean_arch/features/auth/domain/usecase/login.dart';
@@ -34,7 +34,7 @@ class LoginPage extends StatelessWidget {
                   // Update the AuthCubit state
                   context.read<AuthCubit>().loginSuccessful();
 
-                  context.goNamed(AppRoutes.home);
+                  context.goNamed(AppRoutePaths.home);
                 }
                 if (state is ButtonFailure) {
                   var snackBar = SnackBar(content: Text(state.errorMessage));
@@ -69,21 +69,19 @@ class LoginPage extends StatelessWidget {
                   RichText(
                     text: TextSpan(
                       style: DefaultTextStyle.of(context).style.copyWith(
-                            color: const Color.fromARGB(255, 97, 95, 95),
-                            fontSize: 14.0
-                          ),
+                          color: const Color.fromARGB(255, 97, 95, 95),
+                          fontSize: 14.0),
                       children: <TextSpan>[
                         const TextSpan(text: "Don't have an account? "),
                         TextSpan(
                           text: 'Sign up ',
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blueAccent,
-                            decoration: TextDecoration.underline
-                          ),
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blueAccent,
+                              decoration: TextDecoration.underline),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              context.goNamed(AppRoutes.signup);
+                              context.goNamed(AppRoutePaths.signup);
                             },
                         ),
                         const TextSpan(text: 'here'),

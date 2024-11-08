@@ -13,7 +13,6 @@ class LoggerInterceptor extends Interceptor {
     final options = err.requestOptions;
     final requestPath = '${options.baseUrl}${options.path}';
 
-    
     // Log error details, including server message if available
     var message = err.response?.data['message'];
     String? serverMessage;
@@ -24,16 +23,13 @@ class LoggerInterceptor extends Interceptor {
     }
 
 //Error log
-      logger.e(
-        '${options.method} request ==> $requestPath\n'
+    logger.e('${options.method} request ==> $requestPath\n'
         'Server message: ${serverMessage ?? "No server message"}\n'
-        'Payload: ${options.data ?? "No Payload"}'
-      );
+        'Payload: ${options.data ?? "No Payload"}');
 
     //Debug log
     logger.d('Error type: ${err.error} \n'
-        'Error message: ${err.message} \n'
-    );
+        'Error message: ${err.message} \n');
   }
 
   @override
@@ -59,7 +55,7 @@ class AuthInterceptor extends Interceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    if (AppRoutes.publicRoutes.contains(options.path)) {
+    if (AppRoutePaths.publicRoutes.contains(options.path)) {
       return handler.next(options);
     }
 

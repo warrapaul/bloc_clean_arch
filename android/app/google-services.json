@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "627705383267",
+    "project_id": "bloc-proj-9ac4c",
+    "storage_bucket": "bloc-proj-9ac4c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627705383267:android:41efea0c2b7d11568feb56",
+        "android_client_info": {
+          "package_name": "com.bloc.clean"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXQfS_am9h-0IySPlzxSBxzKmxMklTrUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627705383267:android:6f891d2829a8245f8feb56",
+        "android_client_info": {
+          "package_name": "com.bloc_proj.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXQfS_am9h-0IySPlzxSBxzKmxMklTrUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
