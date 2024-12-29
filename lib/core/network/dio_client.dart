@@ -14,15 +14,11 @@ class DioClient {
               responseType: ResponseType.json,
               sendTimeout: const Duration(seconds: 10),
               receiveTimeout: const Duration(seconds: 10)),
-        )
-          ..interceptors.addAll([
+        )..interceptors.addAll([
             LoggerInterceptor(),
             AuthInterceptor(),
+            NewsApiKeyInterceptor(),
           ]);
-          // ..interceptors.addAll([
-          //   AuthInterceptor(),
-          //   if (kDebugMode) LogInterceptor(responseBody: true),
-          // ]);
 
   Future<Response> get(
     String url, {
@@ -118,7 +114,6 @@ class DioClient {
     }
   }
 
-  
   Future<dynamic> delete(
     String url, {
     dynamic data,

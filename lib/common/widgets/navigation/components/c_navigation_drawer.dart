@@ -46,6 +46,9 @@ class CNavigationDrawer extends StatelessWidget {
               },
             });
             break;
+          case 9:
+            context.pushNamed(AppRoutePaths.gridViewHome);
+            break;
         }
       },
       children: [
@@ -102,6 +105,11 @@ class CNavigationDrawer extends StatelessWidget {
           icon: Icon(Icons.slideshow_sharp),
           selectedIcon: Icon(Icons.slideshow),
           label: Text('Notifications'),
+        ),
+        const NavigationDrawerDestination(
+          icon: Icon(Icons.grid_3x3_outlined),
+          selectedIcon: Icon(Icons.grid_3x3),
+          label: Text('GridView'),
         ),
         // Spacer for bottom content
         const SizedBox(height: 8),

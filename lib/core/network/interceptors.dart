@@ -1,4 +1,5 @@
 import 'package:bloc_clean_arch/core/configs/routes/app_routes.dart';
+import 'package:bloc_clean_arch/core/constants/api_urls_constants.dart';
 import 'package:bloc_clean_arch/core/network/auth_token_manager.dart';
 import 'package:bloc_clean_arch/service_locator.dart';
 import 'package:dio/dio.dart';
@@ -6,45 +7,56 @@ import 'package:logger/logger.dart';
 
 class LoggerInterceptor extends Interceptor {
   Logger logger = Logger(
-      printer: PrettyPrinter(methodCount: 0, colors: true, printEmojis: true));
+      printer: PrettyPrinter(
+        methodCount: 0,
+        colors: true,
+        printEmojis: true,
+      ),
+    );
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     final options = err.requestOptions;
-    final requestPath = '${options.baseUrl}${options.path}';
+    // Extract server message if available
+    final message = err.response?.data['message'];
+    // if msg is a list convert to string
+    final serverMessage = message is List ? message.join(', ') : message?.toString();
 
-    // Log error details, including server message if available
-    var message = err.response?.data['message'];
-    String? serverMessage;
-    if (message is List) {
-      serverMessage = message.join(', '); // Convert list to a single string
-    } else if (message is String) {
-      serverMessage = message; // Already a string, no need to change
-    }
+    logger.e('''
+        REQUEST ERROR
+        URL: ${options.baseUrl}${options.path}
+        Method: ${options.method}
+        Payload: ${options.data ?? "No Payload"}
+        Server Message: ${serverMessage ?? "No server message"}
+        Error Type: ${err.type}
+        Error Message: ${err.message}
+        Response: ${err.response?.data}
+    ''');
 
-//Error log
-    logger.e('${options.method} request ==> $requestPath\n'
-        'Server message: ${serverMessage ?? "No server message"}\n'
-        'Payload: ${options.data ?? "No Payload"}');
-
-    //Debug log
-    logger.d('Error type: ${err.error} \n'
-        'Error message: ${err.message} \n');
+    handler.next(err);
   }
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final requestPath = '${options.baseUrl}${options.path}';
-    logger.i('${options.method} request ==> $requestPath'); //Info log
+    logger.i('''
+        OUTGOING REQUEST
+        URL: ${options.baseUrl}${options.path}
+        Method: ${options.method}
+        Payload: ${options.data ?? "No Payload"}
+        Query Parameters: ${options.queryParameters}
+    ''');
     handler.next(options);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    logger.d('STATUSCODE: ${response.statusCode} \n '
-        'STATUSMESSAGE: ${response.statusMessage} \n'
-        'HEADERS: ${response.headers} \n'
-        'Data: ${response.data}'); // Debug log
+    logger.d('''
+      RESPONSE
+      Status: ${response.statusCode} - ${response.statusMessage}
+      Headers: ${response.headers}
+      Data: ${response.data}
+    ''');
+    
     handler.next(response);
   }
 }
@@ -55,7 +67,10 @@ class AuthInterceptor extends Interceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    if (AppRoutePaths.publicRoutes.contains(options.path)) {
+
+    // CONTROL ROUTES THAT UNAUTHENTICATED USER CAN ACCESS (GoRouter redirect for screens)
+    // Check if the current path is in public URLs
+    if (ApiUrlsConstants.publicUrls.contains(options.path)) {
       return handler.next(options);
     }
 
@@ -64,5 +79,26 @@ class AuthInterceptor extends Interceptor {
       options.headers['Authorization'] = 'Bearer $token';
     }
     super.onRequest(options, handler);
+  }
+}
+
+
+class NewsApiKeyInterceptor extends Interceptor {
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    if (ApiUrlsConstants.newsApiRoutes.contains(options.path)) {
+      
+      // ADD TO HEADERS
+      // options.headers['Authorization'] = 'Bearer ${ApiUrlsConstants.newsApiKey}';
+
+      // ADD AS PARAM e.g &apiKey=d82...
+      // Add required parameters
+      if (!options.queryParameters.containsKey('q')) {
+        options.queryParameters['q'] = 'bitcoin';
+      }
+
+      options.queryParameters['apiKey'] = ApiUrlsConstants.newsApiKey;
+    }
+    handler.next(options);
   }
 }

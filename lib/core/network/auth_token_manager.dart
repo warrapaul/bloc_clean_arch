@@ -1,6 +1,7 @@
 import 'package:bloc_clean_arch/service_locator.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+// TO DO: handle refresh token
 class AuthTokenManager {
   static const String _tokenKey = 'access_token';
   final _secureStorage = sl<FlutterSecureStorage>();

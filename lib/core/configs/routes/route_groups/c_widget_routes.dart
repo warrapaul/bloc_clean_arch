@@ -5,6 +5,7 @@ import 'package:bloc_clean_arch/common/widgets/c_widgets_home.dart';
 import 'package:bloc_clean_arch/common/widgets/carousel/c_carousel_slider.dart';
 import 'package:bloc_clean_arch/common/widgets/dialogs/dialog_home.dart';
 import 'package:bloc_clean_arch/common/widgets/forms/basic_form_1.dart';
+import 'package:bloc_clean_arch/common/widgets/gridView/grid_view_home.dart';
 import 'package:bloc_clean_arch/common/widgets/images/images_home.dart';
 import 'package:bloc_clean_arch/common/widgets/shimmer/shimmer_home.dart';
 import 'package:bloc_clean_arch/common/widgets/tabs/basic_tab_bars.dart';
@@ -15,7 +16,15 @@ import 'package:go_router/go_router.dart';
 
 class CWidgetRoutes {
   static List<GoRoute> routes = [
-     GoRoute(
+    
+    GoRoute(
+      name: AppRoutePaths.gridViewHome,
+      path: AppRoutePaths.gridViewHome,
+      builder: (BuildContext context, GoRouterState state) {
+        return GridViewHome();
+      },
+    ),
+    GoRoute(
       name: AppRoutePaths.cWidgets,
       path: AppRoutePaths.cWidgets,
       builder: (BuildContext context, GoRouterState state) {

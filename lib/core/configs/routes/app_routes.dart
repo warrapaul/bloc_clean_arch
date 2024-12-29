@@ -1,13 +1,15 @@
 import 'package:bloc_clean_arch/common/pages/not_found.dart';
-import 'package:bloc_clean_arch/common/pages/tests/test1.dart';
-import 'package:bloc_clean_arch/common/pages/tests/test2.dart';
 import 'package:bloc_clean_arch/core/configs/routes/route_groups/auth_routes.dart';
 import 'package:bloc_clean_arch/core/configs/routes/route_groups/c_firebase_routes.dart';
 import 'package:bloc_clean_arch/core/configs/routes/route_groups/c_widget_routes.dart';
+import 'package:bloc_clean_arch/core/configs/routes/route_groups/news_routes.dart';
 import 'package:bloc_clean_arch/core/configs/routes/route_groups/user_routes.dart';
 import 'package:bloc_clean_arch/core/firebase/screens/notifications_page.dart';
 import 'package:bloc_clean_arch/features/auth/presentation/bloc/auth/auth_cubit.dart';
 import 'package:bloc_clean_arch/features/home/presentation/pages/home.dart';
+import 'package:bloc_clean_arch/features/on_boarding/presentation/cubit/onboarding_cubit.dart';
+import 'package:bloc_clean_arch/features/on_boarding/presentation/cubit/onboarding_state.dart';
+import 'package:bloc_clean_arch/features/on_boarding/presentation/pages/onboarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -19,6 +21,7 @@ import 'package:go_router/go_router.dart';
  */
 
 class AppRoutePaths {
+  static const String onBoarding = '/onBoarding';
 
   // Auth Routes
   static const String login = '/login';
@@ -35,7 +38,16 @@ class AppRoutePaths {
   static const String editProfile = '/profile/edit';
 
   // List of public routes that don't require authentication
-  static const List<String> publicRoutes = [login, signup, forgotPassword, notifications];
+  static const List<String> publicRoutes = [
+    login,
+    signup,
+    forgotPassword,
+    notifications,
+    onBoarding,
+
+    // all news screens are public
+    newsEverything
+  ];
 
   // c widgets
   static const cWidgets = '/cWidgets';
@@ -49,91 +61,75 @@ class AppRoutePaths {
   static const bottomSheetHome = '/bottomSheetHome';
   static const shimmerHome = '/shimmerHome';
   static const crouselSlider = '/crouselSlider';
+  static const gridViewHome = '/gridViewHome';
 
   //firebase
   static const notifications = '/notifications';
 
-  //tests
-  static const test1 = '/test1';
-  static const test2 = '/test2';
+  //home
+  static const String initialRoute = newsEverything; // home;
+
+  // newsApi routes
+  static const newsEverything = '/everything';
 }
 
-
-
-
-
-
 class AppRouter {
-  static GoRouter? _router;
-  static GoRouter get router {
-      if (_router == null) {
-        throw Exception('Router has not been initialized!');
+  static final GoRouter router = GoRouter(
+    // initialLocation: AppRoutePaths.newsEverything,
+    errorBuilder: (context, state) => const NotFoundPage(),
+    routes: <GoRoute>[
+      GoRoute(
+        name: AppRoutePaths.onBoarding,
+        path: AppRoutePaths.onBoarding,
+        builder: (context, state) => const OnboardingPage(),
+      ),
+      GoRoute(
+        name: AppRoutePaths.home,
+        path: AppRoutePaths.home,
+        builder: (context, state) => const HomePage(),
+      ),
+      ...AuthRoutes.routes,
+      ...CWidgetRoutes.routes,
+      ...UserRoutes.routes,
+      ...CFirebaseRoutes.routes,
+      //news api
+      ...NewsRoutes.routes,
+    ],
+    redirect: (BuildContext context, GoRouterState state) {
+      final authCubit = context.read<AuthCubit>();
+      final onboardingCubit = context.read<OnboardingCubit>();
+
+      final bool isAuthenticated = authCubit.state is AuthenticatedState;
+      final bool hasCompletedOnboarding =  onboardingCubit.state is OnboardingCompleted;
+
+      final bool isOnboardingRoute = state.matchedLocation == AppRoutePaths.onBoarding;
+      final bool isLoginRoute = state.matchedLocation == AppRoutePaths.login;
+      final bool isSignupRoute = state.matchedLocation == AppRoutePaths.signup;
+      final bool isPublicRoute =  AppRoutePaths.publicRoutes.contains(state.matchedLocation);
+
+
+// // TO DO: DELETE THIS GLOBAL OVERRIDE
+return AppRoutePaths.initialRoute;
+
+      // check onboarding status
+      if (!hasCompletedOnboarding && !isOnboardingRoute) {
+        return AppRoutePaths.onBoarding;
+      }    
+
+      // CONTROL SCREENS THAT UNAUTHENTICATED USER CAN ACCESS (AuthInterceptor for routes)
+      if (!isAuthenticated) {
+        if (isPublicRoute) { // Allow access to public routes
+          return null; 
+        }        
+        return AppRoutePaths.login; // Redirect to login for non-public routes
       }
-      return _router!;
-    }
 
-  static void initializeRouter(bool? isAuthenticated) {
-     _router = GoRouter(
-      // initialLocation:isAuthenticated ? AppRoutePaths.home : AppRoutePaths.login,
-      initialLocation: isAuthenticated == true ? AppRoutePaths.home : AppRoutePaths.login,
+      // Redirect authenticated users away from login/signup
+      if (isAuthenticated && (isLoginRoute || isSignupRoute)) {
+        return AppRoutePaths.initialRoute;
+      }     
 
-      errorBuilder: (context, state) => const NotFoundPage(),
-      routes: <GoRoute>[
-        GoRoute(
-          path: '/test1',
-          builder: (BuildContext context, GoRouterState state) => const Test1(),
-        ),
-        GoRoute(
-          path: '/test2/:id',
-          builder: (BuildContext context, GoRouterState state) => Test2(
-            id: state.pathParameters['id']!,
-          ),
-        ),
-        GoRoute(
-          // name: AppRoutePaths.notifications,
-          path: AppRoutePaths.notifications,
-          builder: (context, state) {
-            final arguments = state.extra as Map<String, dynamic>? ?? {};
-            final title = arguments['title'] as String?;
-            final body = arguments['body'] as String?;
-            final data = arguments['data'] as Map<String, dynamic>?;
-
-            return NotificationsPage(
-              title: title,
-              body: body,
-              data: data,
-            );
-          },
-        ),
-        GoRoute(
-          name: AppRoutePaths.home,
-          path: AppRoutePaths.home,
-          builder: (context, state) => const HomePage(),
-        ),
-        ...AuthRoutes.routes,
-        ...CWidgetRoutes.routes,
-        ...UserRoutes.routes,
-        ...CFirebaseRoutes.routes
-      ],
-      
-      redirect: (BuildContext context, GoRouterState state) {
-        final authCubit = BlocProvider.of<AuthCubit>(context);
-        final bool isAuthenticated = authCubit.state is AuthenticatedState;
-        final bool isLoginRoute = state.matchedLocation == AppRoutePaths.login;
-        final bool isSignupRoute =
-            state.matchedLocation == AppRoutePaths.signup;
-
-        if (!isAuthenticated &&
-            !AppRoutePaths.publicRoutes.contains(state.matchedLocation)) {
-          return AppRoutePaths.login;
-        }
-
-        if (isAuthenticated && (isLoginRoute || isSignupRoute)) {
-          return AppRoutePaths.home;
-        }
-
-        return null;
-      },
-    );
-  }
+      return null;
+    },
+  );
 }
