@@ -1,4 +1,6 @@
+import 'package:bloc_clean_arch/features/news/domain/entities/article.dart';
 import 'package:bloc_clean_arch/features/news/presentation/cubit/cubit/article_cubit.dart';
+import 'package:bloc_clean_arch/features/news/presentation/widgets/news_card.dart';
 import 'package:bloc_clean_arch/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,23 +18,26 @@ class NewsHomePage extends StatelessWidget {
         ),
         body:
             BlocBuilder<ArticleCubit, ArticleState>(builder: (context, state) {
-          if (state is ArticleInitialState) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (state is ArticleLoadSuccessState) {
-            return Center(
-              child: Text('data loaded'),
-            );
-          }
-          if (state is ArticleLoadFailureState) {
-            return Center(
-              child: Text('loading error ${state.message}'),
-            );
-          }
+          return switch (state) {
+            ArticleLoadingState() => const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ArticleLoadSuccessState() => ListView.builder(
+                itemCount: state.articles.length,
+                itemBuilder: (context, int index) {
+                  final Article article = state.articles[index];
+                  return NewsCard(
+                    article: article,
+                  );
+                },
+              ),
+            ArticleLoadFailureState() =>  Center(
+                child: Text('loading error ${state.message}'),
+              ),
+              _ => const SizedBox()
+          };
 
-          return Text('Eerro');
+         
         }),
       ),
     );

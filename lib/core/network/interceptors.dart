@@ -1,4 +1,3 @@
-import 'package:bloc_clean_arch/core/configs/routes/app_routes.dart';
 import 'package:bloc_clean_arch/core/constants/api_urls_constants.dart';
 import 'package:bloc_clean_arch/core/network/auth_token_manager.dart';
 import 'package:bloc_clean_arch/service_locator.dart';
@@ -56,7 +55,7 @@ class LoggerInterceptor extends Interceptor {
       Headers: ${response.headers}
       Data: ${response.data}
     ''');
-    
+
     handler.next(response);
   }
 }
@@ -92,11 +91,6 @@ class NewsApiKeyInterceptor extends Interceptor {
       // options.headers['Authorization'] = 'Bearer ${ApiUrlsConstants.newsApiKey}';
 
       // ADD AS PARAM e.g &apiKey=d82...
-      // Add required parameters
-      if (!options.queryParameters.containsKey('q')) {
-        options.queryParameters['q'] = 'bitcoin';
-      }
-
       options.queryParameters['apiKey'] = ApiUrlsConstants.newsApiKey;
     }
     handler.next(options);

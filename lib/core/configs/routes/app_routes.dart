@@ -46,7 +46,8 @@ class AppRoutePaths {
     onBoarding,
 
     // all news screens are public
-    newsEverything
+    newsEverything,
+    newsSearch,
   ];
 
   // c widgets
@@ -67,10 +68,13 @@ class AppRoutePaths {
   static const notifications = '/notifications';
 
   //home
-  static const String initialRoute = newsEverything; // home;
+  static const String initialRoute = newsSearch; // home;
 
   // newsApi routes
   static const newsEverything = '/everything';
+  static const newsSearch = '/newsSearch';
+
+  
 }
 
 class AppRouter {

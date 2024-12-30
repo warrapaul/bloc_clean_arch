@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final articleModel = articleModelFromJson(jsonString);
-
 import 'dart:convert';
 
 import 'package:bloc_clean_arch/features/news/domain/entities/article.dart';
@@ -12,28 +8,28 @@ ArticleModel articleModelFromJson(String str) =>
 String articleModelToJson(ArticleModel data) => json.encode(data.toJson());
 
 class ArticleModel {
-  Source source;
-  String author;
+  SourceModel source;
+  String? author;
   String title;
-  String description;
-  String url;
-  String urlToImage;
+  String? description;
+  String? url;
+  String? urlToImage;
   DateTime publishedAt;
-  String content;
+  String? content;
 
   ArticleModel({
     required this.source,
-    required this.author,
+    this.author,
     required this.title,
-    required this.description,
-    required this.url,
-    required this.urlToImage,
+    this.description,
+    this.url,
+    this.urlToImage,
     required this.publishedAt,
     required this.content,
   });
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) => ArticleModel(
-        source: Source.fromJson(json["source"]),
+        source: SourceModel.fromJson(json["source"]),
         author: json["author"],
         title: json["title"],
         description: json["description"],
@@ -53,18 +49,30 @@ class ArticleModel {
         "publishedAt": publishedAt.toIso8601String(),
         "content": content,
       };
+
+  // Map Model to Entity
+  Article toEntity() => Article(
+        source: source.toEntity(), 
+        author: author,
+        title: title,
+        description: description,
+        url: url,
+        urlToImage: urlToImage,
+        publishedAt: publishedAt,
+        content: content,
+      );
 }
 
-class Source {
+class SourceModel {
   dynamic id;
   String name;
 
-  Source({
+  SourceModel({
     required this.id,
     required this.name,
   });
 
-  factory Source.fromJson(Map<String, dynamic> json) => Source(
+  factory SourceModel.fromJson(Map<String, dynamic> json) => SourceModel(
         id: json["id"],
         name: json["name"],
       );
@@ -73,4 +81,9 @@ class Source {
         "id": id,
         "name": name,
       };
+
+       Source toEntity() => Source(
+        id: id,
+        name: name,
+      );
 }

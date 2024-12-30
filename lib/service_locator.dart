@@ -12,6 +12,7 @@ import 'package:bloc_clean_arch/features/news/data/datasources/article_remote_da
 import 'package:bloc_clean_arch/features/news/data/repositories/article_repository_impl.dart';
 import 'package:bloc_clean_arch/features/news/domain/repositories/article_repository.dart';
 import 'package:bloc_clean_arch/features/news/domain/usecases/get_articles.dart';
+import 'package:bloc_clean_arch/features/news/domain/usecases/search_articles.dart';
 import 'package:bloc_clean_arch/features/news/presentation/cubit/cubit/article_cubit.dart';
 import 'package:bloc_clean_arch/features/on_boarding/data/data_sources/onboarding_local_datasource.dart';
 import 'package:bloc_clean_arch/features/on_boarding/data/repository/onboarding_repository_impl.dart';
@@ -107,5 +108,12 @@ void setUpServiceLocator(
 
   sl.registerSingleton<GetArticlesUseCase>(
       GetArticlesUseCase(articleRepository: sl<ArticleRepository>()));
-  sl.registerFactory<ArticleCubit>(()=>ArticleCubit(getArticlesUseCase: sl<GetArticlesUseCase>()));
+  
+  sl.registerSingleton<SearchArticlesUseCase>(
+      SearchArticlesUseCase(articleRepository: sl<ArticleRepository>()));  
+
+  sl.registerFactory<ArticleCubit>(()=>ArticleCubit(
+    getArticlesUseCase: sl<GetArticlesUseCase>(),
+    searchArticlesUseCase: sl<SearchArticlesUseCase>(),
+  ));
 }

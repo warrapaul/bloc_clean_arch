@@ -24,3 +24,7 @@ GoRouter(
     onPressed: () {
         AppRouter.router.go('/test1');
     },
+
+
+# run futter app with CORS
+flutter run -d chrome --web-browser-flag "--disable-web-security"

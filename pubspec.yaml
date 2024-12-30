@@ -50,6 +50,7 @@ dependencies:
   flutter_local_notifications: ^18.0.0
   flutter_svg: ^2.0.16
   shared_preferences: ^2.3.4
+  intl: ^0.20.1
 
 
 dev_dependencies:
