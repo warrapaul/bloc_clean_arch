@@ -8,6 +8,13 @@ import 'package:bloc_clean_arch/features/auth/domain/usecase/is_logged_in.dart';
 import 'package:bloc_clean_arch/features/auth/domain/usecase/logout.dart';
 import 'package:bloc_clean_arch/features/auth/domain/usecase/login.dart';
 import 'package:bloc_clean_arch/features/auth/domain/usecase/signup.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/data/datasources/dummy_posts_datasource.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/data/repositories/dummy_posts_repository_impl.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/domain/repositories/dummy_post_repository.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/domain/usecases/get_dummy_post_by_id.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/domain/usecases/get_dummy_posts.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/domain/usecases/search_dummy_posts.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/presentation/cubit/dummy_posts_cubit.dart';
 import 'package:bloc_clean_arch/features/news/data/datasources/article_remote_datasource.dart';
 import 'package:bloc_clean_arch/features/news/data/repositories/article_repository_impl.dart';
 import 'package:bloc_clean_arch/features/news/domain/repositories/article_repository.dart';
@@ -97,7 +104,6 @@ void setUpServiceLocator(
     ),
   );
 
-
   // ************ NEWS FEATURE *****************************
 
   sl.registerSingleton<ArticleRemoteDatasource>(
@@ -108,12 +114,31 @@ void setUpServiceLocator(
 
   sl.registerSingleton<GetArticlesUseCase>(
       GetArticlesUseCase(articleRepository: sl<ArticleRepository>()));
-  
   sl.registerSingleton<SearchArticlesUseCase>(
-      SearchArticlesUseCase(articleRepository: sl<ArticleRepository>()));  
+      SearchArticlesUseCase(articleRepository: sl<ArticleRepository>()));
 
-  sl.registerFactory<ArticleCubit>(()=>ArticleCubit(
-    getArticlesUseCase: sl<GetArticlesUseCase>(),
-    searchArticlesUseCase: sl<SearchArticlesUseCase>(),
-  ));
+  sl.registerFactory<ArticleCubit>(() => ArticleCubit(
+        getArticlesUseCase: sl<GetArticlesUseCase>(),
+        searchArticlesUseCase: sl<SearchArticlesUseCase>(),
+      ));
+
+  // ************ DUMMY POSTS FEATURE *****************************
+  sl.registerSingleton<DummyPostsDatasource>(
+      DummyPostsDatasourceImpl(dioClient: sl<DioClient>()));
+  sl.registerSingleton<DummyPostRepository>(DummyPostsRepositoryImpl(
+      dummyPostsDatasource: sl<DummyPostsDatasource>()));
+
+  sl.registerSingleton<GetDummyPostsUseCase>(
+      GetDummyPostsUseCase(dummyPostRepository: sl<DummyPostRepository>()));
+  sl.registerSingleton<SearchDummyPostsUserCase>(
+      SearchDummyPostsUserCase(dummyPostRepository: sl<DummyPostRepository>()));
+  sl.registerSingleton<GetDummyPostByIdUseCase>(
+      GetDummyPostByIdUseCase(dummyPostRepository: sl<DummyPostRepository>()));
+      
+
+  sl.registerFactory<DummyPostsCubit>(() => DummyPostsCubit(
+      getDummyPostsUseCase: sl<GetDummyPostsUseCase>(),
+      searchDummyPostsUserCase: sl<SearchDummyPostsUserCase>(),
+      getDummyPostByIdUseCase: sl< GetDummyPostByIdUseCase>(),
+    ));
 }

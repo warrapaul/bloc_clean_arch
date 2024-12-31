@@ -15,6 +15,7 @@ class AuthRoutes {
       path: AppRoutePaths.signup,
       builder: (context, state) => SignupPage(),
     ),
+
     // GoRoute(
     //   name: AppRoutePaths.forgotPassword,
     //   path: AppRoutePaths.forgotPassword,

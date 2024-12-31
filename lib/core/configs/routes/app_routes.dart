@@ -37,6 +37,7 @@ class AppRoutePaths {
   static const String settings = '/settings';
   static const String editProfile = '/profile/edit';
 
+
   // List of public routes that don't require authentication
   static const List<String> publicRoutes = [
     login,
@@ -48,6 +49,9 @@ class AppRoutePaths {
     // all news screens are public
     newsEverything,
     newsSearch,
+    dummyPosts,
+    dummyPostDetail,
+
   ];
 
   // c widgets
@@ -67,19 +71,24 @@ class AppRoutePaths {
   //firebase
   static const notifications = '/notifications';
 
-  //home
-  static const String initialRoute = newsSearch; // home;
 
   // newsApi routes
   static const newsEverything = '/everything';
   static const newsSearch = '/newsSearch';
+  // dummy posts
+  static const dummyPosts = '/dummy-posts';
+  static const dummyPostDetail = '/dummy-posts/:id';
+  static const dummyPostDetailName = 'dummy-posts-id';
 
-  
+
+  //home
+  static const String initialRoute = dummyPosts; // home;
+
 }
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    // initialLocation: AppRoutePaths.newsEverything,
+    // initialLocation: AppRoutePaths.initialRoute,
     errorBuilder: (context, state) => const NotFoundPage(),
     routes: <GoRoute>[
       GoRoute(
@@ -104,34 +113,37 @@ class AppRouter {
       final onboardingCubit = context.read<OnboardingCubit>();
 
       final bool isAuthenticated = authCubit.state is AuthenticatedState;
-      final bool hasCompletedOnboarding =  onboardingCubit.state is OnboardingCompleted;
+      final bool hasCompletedOnboarding =
+          onboardingCubit.state is OnboardingCompleted;
 
-      final bool isOnboardingRoute = state.matchedLocation == AppRoutePaths.onBoarding;
+      final bool isOnboardingRoute =
+          state.matchedLocation == AppRoutePaths.onBoarding;
       final bool isLoginRoute = state.matchedLocation == AppRoutePaths.login;
       final bool isSignupRoute = state.matchedLocation == AppRoutePaths.signup;
-      final bool isPublicRoute =  AppRoutePaths.publicRoutes.contains(state.matchedLocation);
+      final bool isPublicRoute =
+          AppRoutePaths.publicRoutes.contains(state.matchedLocation);
 
-
-// // TO DO: DELETE THIS GLOBAL OVERRIDE
-return AppRoutePaths.initialRoute;
+      // // TO DO: DELETE THIS GLOBAL OVERRIDE
+      // return AppRoutePaths.initialRoute;
 
       // check onboarding status
       if (!hasCompletedOnboarding && !isOnboardingRoute) {
         return AppRoutePaths.onBoarding;
-      }    
+      }
 
       // CONTROL SCREENS THAT UNAUTHENTICATED USER CAN ACCESS (AuthInterceptor for routes)
       if (!isAuthenticated) {
-        if (isPublicRoute) { // Allow access to public routes
-          return null; 
-        }        
+        if (isPublicRoute) {
+          // Allow access to public routes
+          return null;
+        }
         return AppRoutePaths.login; // Redirect to login for non-public routes
       }
 
       // Redirect authenticated users away from login/signup
       if (isAuthenticated && (isLoginRoute || isSignupRoute)) {
         return AppRoutePaths.initialRoute;
-      }     
+      }
 
       return null;
     },
