@@ -1,4 +1,5 @@
 import 'package:bloc_clean_arch/core/error/failure.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/data/datasources/dummy_post_tags_datasource.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/datasources/dummy_posts_datasource.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/dummy_post_model.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/filter_dummy_posts_req_params.dart';
@@ -52,14 +53,13 @@ class DummyPostsRepositoryImpl implements DummyPostRepository {
   }
 
   @override
-  Future<Either<Failure, List<DummyPostTag>>> getDummyPostTags() {
-    // TODO: implement getDummyPostTags
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, List<DummyPost>>> getDummyPostsByTag() {
-    // TODO: implement getDummyPostsByTag
-    throw UnimplementedError();
+  Future<Either<Failure, List<DummyPost>>> getDummyPostsByTag(FilterDummyPostsReqParams param) async {
+    try {
+      List<DummyPostModel> postModels =  await dummyPostsDatasource.getDummyPostsByTag(param);
+      List<DummyPost> posts = postModels.map((postModel) => postModel.toEntity()).toList();
+      return Right(posts);
+    } catch (e) {
+      return Left(Failure(message: e.toString()));
+    }
   }
 }

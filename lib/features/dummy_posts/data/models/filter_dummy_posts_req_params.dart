@@ -4,8 +4,10 @@ class FilterDummyPostsReqParams {
   final int? pageSize;
   final String? sortBy;
   final String? sortOrder;
+  final String? tag;
 
   FilterDummyPostsReqParams({
+  this.tag,
   this.searchPhrase, 
   this.page, 
   this.pageSize, 

@@ -15,6 +15,11 @@ class ApiUrlsConstants {
   static const newsEverything = '/everything';
   static const dummyPosts = 'posts';
   static const searchDummyPosts = 'posts/search';
+  static const dummyPostTags = 'posts/tags';
+  static const dummyPostByTag = 'posts/tag';//:tag
+
+  // 'https://dummyjson.com/posts/tag/life'
+
   
   static const List<String> publicUrls = [ // List of public URLs that don't require authentication
     loginUrl,

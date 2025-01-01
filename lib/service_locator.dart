@@ -8,13 +8,19 @@ import 'package:bloc_clean_arch/features/auth/domain/usecase/is_logged_in.dart';
 import 'package:bloc_clean_arch/features/auth/domain/usecase/logout.dart';
 import 'package:bloc_clean_arch/features/auth/domain/usecase/login.dart';
 import 'package:bloc_clean_arch/features/auth/domain/usecase/signup.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/data/datasources/dummy_post_tags_datasource.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/datasources/dummy_posts_datasource.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/data/repositories/dummy_post_tags_repository_impl.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/repositories/dummy_posts_repository_impl.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/domain/repositories/dummy_post_repository.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/domain/repositories/dummy_post_tags_repository.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/domain/usecases/get_dummy_post_by_id.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/domain/usecases/get_dummy_post_tags.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/domain/usecases/get_dummy_posts.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/domain/usecases/get_dummy_posts_by_tag.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/domain/usecases/search_dummy_posts.dart';
-import 'package:bloc_clean_arch/features/dummy_posts/presentation/cubit/dummy_posts_cubit.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/presentation/cubit/dummy_post_tags/dummy_post_tags_cubit.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/presentation/cubit/dummy_posts/dummy_posts_cubit.dart';
 import 'package:bloc_clean_arch/features/news/data/datasources/article_remote_datasource.dart';
 import 'package:bloc_clean_arch/features/news/data/repositories/article_repository_impl.dart';
 import 'package:bloc_clean_arch/features/news/domain/repositories/article_repository.dart';
@@ -134,11 +140,26 @@ void setUpServiceLocator(
       SearchDummyPostsUserCase(dummyPostRepository: sl<DummyPostRepository>()));
   sl.registerSingleton<GetDummyPostByIdUseCase>(
       GetDummyPostByIdUseCase(dummyPostRepository: sl<DummyPostRepository>()));
-      
+  sl.registerSingleton<GetDummyPostsByTagUseCase>(
+      GetDummyPostsByTagUseCase(dummyPostRepository: sl<DummyPostRepository>()));     
 
   sl.registerFactory<DummyPostsCubit>(() => DummyPostsCubit(
       getDummyPostsUseCase: sl<GetDummyPostsUseCase>(),
       searchDummyPostsUserCase: sl<SearchDummyPostsUserCase>(),
       getDummyPostByIdUseCase: sl< GetDummyPostByIdUseCase>(),
+      getDummyPostsByTagUseCase: sl<GetDummyPostsByTagUseCase>(),
     ));
+
+    // ----------------dummy post tags
+  sl.registerSingleton<DummyPostTagsDatasource>(
+      DummyPostTagsDatasourceImpl(dioClient: sl<DioClient>()));
+  sl.registerSingleton<DummyPostTagsRepository>(DummyPostTagsRepositoryImpl(
+      dummyPostTagsDatasource: sl<DummyPostTagsDatasource>()));
+
+  sl.registerSingleton<GetDummyPostTagsUseCase>(
+      GetDummyPostTagsUseCase(dummyPostTagsRepository: sl<DummyPostTagsRepository>()));
+ 
+  sl.registerFactory<DummyPostTagsCubit>(() => DummyPostTagsCubit(
+        getDummyPostTagsUseCase: sl<GetDummyPostTagsUseCase>(),
+      ));
 }

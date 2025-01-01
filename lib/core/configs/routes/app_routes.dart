@@ -79,16 +79,18 @@ class AppRoutePaths {
   static const dummyPosts = '/dummy-posts';
   static const dummyPostDetail = '/dummy-posts/:id';
   static const dummyPostDetailName = 'dummy-posts-id';
+  static const dummyPostsHome = '/dummy-posts-home';
+
 
 
   //home
-  static const String initialRoute = dummyPosts; // home;
+  static const String initialRoute = dummyPostsHome; // home;
 
 }
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    // initialLocation: AppRoutePaths.initialRoute,
+    initialLocation: AppRoutePaths.initialRoute,
     errorBuilder: (context, state) => const NotFoundPage(),
     routes: <GoRoute>[
       GoRoute(
@@ -105,47 +107,47 @@ class AppRouter {
       ...CWidgetRoutes.routes,
       ...UserRoutes.routes,
       ...CFirebaseRoutes.routes,
-      //news api
+      //news api and dummy posts 
       ...NewsRoutes.routes,
     ],
-    redirect: (BuildContext context, GoRouterState state) {
-      final authCubit = context.read<AuthCubit>();
-      final onboardingCubit = context.read<OnboardingCubit>();
+    // redirect: (BuildContext context, GoRouterState state) {
+    //   final authCubit = context.read<AuthCubit>();
+    //   final onboardingCubit = context.read<OnboardingCubit>();
 
-      final bool isAuthenticated = authCubit.state is AuthenticatedState;
-      final bool hasCompletedOnboarding =
-          onboardingCubit.state is OnboardingCompleted;
+    //   final bool isAuthenticated = authCubit.state is AuthenticatedState;
+    //   final bool hasCompletedOnboarding =
+    //       onboardingCubit.state is OnboardingCompleted;
 
-      final bool isOnboardingRoute =
-          state.matchedLocation == AppRoutePaths.onBoarding;
-      final bool isLoginRoute = state.matchedLocation == AppRoutePaths.login;
-      final bool isSignupRoute = state.matchedLocation == AppRoutePaths.signup;
-      final bool isPublicRoute =
-          AppRoutePaths.publicRoutes.contains(state.matchedLocation);
+    //   final bool isOnboardingRoute =
+    //       state.matchedLocation == AppRoutePaths.onBoarding;
+    //   final bool isLoginRoute = state.matchedLocation == AppRoutePaths.login;
+    //   final bool isSignupRoute = state.matchedLocation == AppRoutePaths.signup;
+    //   final bool isPublicRoute =
+    //       AppRoutePaths.publicRoutes.contains(state.matchedLocation);
 
-      // // TO DO: DELETE THIS GLOBAL OVERRIDE
-      // return AppRoutePaths.initialRoute;
+    //   // // TO DO: DELETE THIS GLOBAL OVERRIDE
+    //   // return AppRoutePaths.initialRoute;
 
-      // check onboarding status
-      if (!hasCompletedOnboarding && !isOnboardingRoute) {
-        return AppRoutePaths.onBoarding;
-      }
+    //   // check onboarding status
+    //   if (!hasCompletedOnboarding && !isOnboardingRoute) {
+    //     return AppRoutePaths.onBoarding;
+    //   }
 
-      // CONTROL SCREENS THAT UNAUTHENTICATED USER CAN ACCESS (AuthInterceptor for routes)
-      if (!isAuthenticated) {
-        if (isPublicRoute) {
-          // Allow access to public routes
-          return null;
-        }
-        return AppRoutePaths.login; // Redirect to login for non-public routes
-      }
+    //   // CONTROL SCREENS THAT UNAUTHENTICATED USER CAN ACCESS (AuthInterceptor for routes)
+    //   if (!isAuthenticated) {
+    //     if (isPublicRoute) {
+    //       // Allow access to public routes
+    //       return null;
+    //     }
+    //     return AppRoutePaths.login; // Redirect to login for non-public routes
+    //   }
 
-      // Redirect authenticated users away from login/signup
-      if (isAuthenticated && (isLoginRoute || isSignupRoute)) {
-        return AppRoutePaths.initialRoute;
-      }
+    //   // Redirect authenticated users away from login/signup
+    //   if (isAuthenticated && (isLoginRoute || isSignupRoute)) {
+    //     return AppRoutePaths.initialRoute;
+    //   }
 
-      return null;
-    },
+    //   return null;
+    // },
   );
 }

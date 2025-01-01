@@ -1,6 +1,7 @@
 import 'package:bloc_clean_arch/core/configs/routes/app_routes.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/pages/dummy_post_details.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/pages/dummy_posts.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/presentation/pages/dummy_posts_home.dart';
 import 'package:bloc_clean_arch/features/news/presentation/pages/news_home.dart';
 import 'package:bloc_clean_arch/features/news/presentation/pages/news_search_home.dart';
 import 'package:go_router/go_router.dart';
@@ -28,9 +29,11 @@ class NewsRoutes {
           final int postId = int.parse(state.pathParameters['id']!);
           return DummyPostDetailsPage(postId: postId);
         }),
+    GoRoute(
+        path: AppRoutePaths.dummyPostsHome,
+        name: AppRoutePaths.dummyPostsHome,
+        builder: (context, state) => DummyPostsHomePage())
 
-
-   
     // GoRoute(
     //   name: AppRoutePaths.dummyPosts,
     //   path: AppRoutePaths.dummyPosts,

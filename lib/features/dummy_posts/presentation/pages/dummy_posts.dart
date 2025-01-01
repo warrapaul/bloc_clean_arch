@@ -1,5 +1,5 @@
 import 'package:bloc_clean_arch/features/dummy_posts/domain/entities/dummy_post.dart';
-import 'package:bloc_clean_arch/features/dummy_posts/presentation/cubit/dummy_posts_cubit.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/presentation/cubit/dummy_posts/dummy_posts_cubit.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/widgets/dummy_post_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
