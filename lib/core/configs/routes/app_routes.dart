@@ -84,7 +84,7 @@ class AppRoutePaths {
 
 
   //home
-  static const String initialRoute = dummyPostsHome; // home;
+  static const String initialRoute = cWidgets; // home;
 
 }
 

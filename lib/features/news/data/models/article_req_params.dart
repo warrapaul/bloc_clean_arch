@@ -7,6 +7,8 @@ class ArticleReqParams {
   final String? sortBy;
   final List<String>? searchIn;
   final List<String>? sources;
+  // final String category;  //businessentertainmentgeneralhealthsciencesportstechnology
+  // final String country;
 
   ArticleReqParams({
     this.from,
