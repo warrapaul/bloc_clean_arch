@@ -1,4 +1,6 @@
 import 'package:bloc_clean_arch/core/network/dio_client.dart';
+import 'package:bloc_clean_arch/core/theme/cubit/theme_cubit.dart';
+import 'package:bloc_clean_arch/core/theme/repository/theme_repository.dart';
 import 'package:bloc_clean_arch/features/auth/data/data_source/auth_api_service.dart';
 import 'package:bloc_clean_arch/features/auth/data/data_source/auth_local_service.dart';
 import 'package:bloc_clean_arch/core/network/auth_token_manager.dart';
@@ -19,6 +21,7 @@ import 'package:bloc_clean_arch/features/dummy_posts/domain/usecases/get_dummy_p
 import 'package:bloc_clean_arch/features/dummy_posts/domain/usecases/get_dummy_posts.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/domain/usecases/get_dummy_posts_by_tag.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/domain/usecases/search_dummy_posts.dart';
+import 'package:bloc_clean_arch/features/dummy_posts/presentation/bloc/dummy_posts_search_bloc.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/cubit/dummy_post_tags/dummy_post_tags_cubit.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/cubit/dummy_posts/dummy_posts_cubit.dart';
 import 'package:bloc_clean_arch/features/news/data/datasources/article_remote_datasource.dart';
@@ -70,6 +73,12 @@ void setUpServiceLocator(
   //     dioClient: sl<DioClient>(),
   //   ),
   // );
+
+  // ************************* THEME DI
+  sl.registerFactory<ThemeRepository>(
+      () => ThemeRepository(sharedPreferences: sl<SharedPreferences>()));
+
+  sl.registerFactory<ThemeCubit>(() => ThemeCubit(sl<ThemeRepository>()));
 
   // DATASOURCES
   sl.registerSingleton<OnboardingLocalDataSource>(OnboardingLocalDataSourceImpl(
@@ -140,25 +149,29 @@ void setUpServiceLocator(
       SearchDummyPostsUserCase(dummyPostRepository: sl<DummyPostRepository>()));
   sl.registerSingleton<GetDummyPostByIdUseCase>(
       GetDummyPostByIdUseCase(dummyPostRepository: sl<DummyPostRepository>()));
-  sl.registerSingleton<GetDummyPostsByTagUseCase>(
-      GetDummyPostsByTagUseCase(dummyPostRepository: sl<DummyPostRepository>()));     
+  sl.registerSingleton<GetDummyPostsByTagUseCase>(GetDummyPostsByTagUseCase(
+      dummyPostRepository: sl<DummyPostRepository>()));
 
   sl.registerFactory<DummyPostsCubit>(() => DummyPostsCubit(
-      getDummyPostsUseCase: sl<GetDummyPostsUseCase>(),
-      searchDummyPostsUserCase: sl<SearchDummyPostsUserCase>(),
-      getDummyPostByIdUseCase: sl< GetDummyPostByIdUseCase>(),
-      getDummyPostsByTagUseCase: sl<GetDummyPostsByTagUseCase>(),
-    ));
+        getDummyPostsUseCase: sl<GetDummyPostsUseCase>(),
+        searchDummyPostsUserCase: sl<SearchDummyPostsUserCase>(),
+        getDummyPostByIdUseCase: sl<GetDummyPostByIdUseCase>(),
+        getDummyPostsByTagUseCase: sl<GetDummyPostsByTagUseCase>(),
+      ));
 
-    // ----------------dummy post tags
+  sl.registerFactory<DummyPostsSearchBloc>(() => DummyPostsSearchBloc(
+      searchDummyPostsUserCase: sl<SearchDummyPostsUserCase>(),
+  ));
+
+  // ----------------dummy post tags
   sl.registerSingleton<DummyPostTagsDatasource>(
       DummyPostTagsDatasourceImpl(dioClient: sl<DioClient>()));
   sl.registerSingleton<DummyPostTagsRepository>(DummyPostTagsRepositoryImpl(
       dummyPostTagsDatasource: sl<DummyPostTagsDatasource>()));
 
-  sl.registerSingleton<GetDummyPostTagsUseCase>(
-      GetDummyPostTagsUseCase(dummyPostTagsRepository: sl<DummyPostTagsRepository>()));
- 
+  sl.registerSingleton<GetDummyPostTagsUseCase>(GetDummyPostTagsUseCase(
+      dummyPostTagsRepository: sl<DummyPostTagsRepository>()));
+
   sl.registerFactory<DummyPostTagsCubit>(() => DummyPostTagsCubit(
         getDummyPostTagsUseCase: sl<GetDummyPostTagsUseCase>(),
       ));

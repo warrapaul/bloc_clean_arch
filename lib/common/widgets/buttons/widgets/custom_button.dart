@@ -1,5 +1,5 @@
 import 'package:bloc_clean_arch/core/constants/app_colors.dart';
-import 'package:bloc_clean_arch/core/theme/custom_button_theme.dart';
+import 'package:bloc_clean_arch/core/theme/custom_styles/custom_button_theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {

@@ -1,5 +1,6 @@
 import 'package:bloc_clean_arch/common/bloc/button/button_cubit.dart';
 import 'package:bloc_clean_arch/core/configs/routes/app_routes.dart';
+import 'package:bloc_clean_arch/core/theme/cubit/theme_cubit.dart';
 import 'package:bloc_clean_arch/features/auth/domain/usecase/logout.dart';
 import 'package:bloc_clean_arch/features/users/presentation/bloc/cubit/user_profile/user_profile_cubit.dart';
 import 'package:bloc_clean_arch/service_locator.dart';
@@ -42,6 +43,24 @@ class HomePage extends StatelessWidget {
                 appBar: AppBar(
                   title: const Text('Home'),
                   actions: [
+                      IconButton(
+                      icon: Icon(
+                        
+                        context.read<ThemeCubit>().state.themeMode ==
+                                ThemeMode.dark
+                            ? Icons.light_mode_outlined
+                            : Icons.dark_mode_outlined,
+                        color: context.read<ThemeCubit>().state.themeMode ==
+                                ThemeMode.dark
+                            ? Colors.yellow[700]
+                            : Colors.blue[800],
+                      ),
+                      onPressed: () {
+                        context.read<ThemeCubit>().toggleTheme();
+                      },
+                      tooltip: 'Toggle Theme',
+                    ),
+
                     if (userProfileState is UserProfileLoaded)
                       CircleAvatar(
                         backgroundColor: Colors.blue,
@@ -59,6 +78,8 @@ class HomePage extends StatelessWidget {
                           ? const CircularProgressIndicator()
                           : const Icon(Icons.logout),
                     ),
+
+
                   ],
                 ),
                 body: Center(

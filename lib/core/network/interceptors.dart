@@ -49,11 +49,17 @@ class LoggerInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    logger.d('''
+    // logger.d('''
+    //   RESPONSE
+    //   Status: ${response.statusCode} - ${response.statusMessage}
+    //   Headers: ${response.headers}
+    //   Data: ${response.data}
+    // ''');
+
+     logger.d('''
       RESPONSE
       Status: ${response.statusCode} - ${response.statusMessage}
-      Headers: ${response.headers}
-      Data: ${response.data}
+      Data: uncomment onResponse in Logger Interceptor
     ''');
 
     handler.next(response);

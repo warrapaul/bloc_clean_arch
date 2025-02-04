@@ -1,5 +1,5 @@
 import 'package:bloc_clean_arch/common/widgets/buttons/widgets/custom_button.dart';
-import 'package:bloc_clean_arch/core/theme/custom_button_theme.dart';
+import 'package:bloc_clean_arch/core/theme/custom_styles/custom_button_theme.dart';
 import 'package:flutter/material.dart';
 
 class ButtonHome extends StatelessWidget {

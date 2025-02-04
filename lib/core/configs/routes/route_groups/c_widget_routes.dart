@@ -11,12 +11,19 @@ import 'package:bloc_clean_arch/common/widgets/shimmer/shimmer_home.dart';
 import 'package:bloc_clean_arch/common/widgets/tabs/basic_tab_bars.dart';
 import 'package:bloc_clean_arch/common/widgets/test/test_one.dart';
 import 'package:bloc_clean_arch/core/configs/routes/app_routes.dart';
+import 'package:bloc_clean_arch/features/reusable_widgets/app_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class CWidgetRoutes {
   static List<GoRoute> routes = [
-    
+    GoRoute(
+      name: AppRoutePaths.appWidgetsHome,
+      path: AppRoutePaths.appWidgetsHome,
+      builder: (BuildContext context, GoRouterState state) {
+        return AppWidgetsPage();
+      },
+    ),
     GoRoute(
       name: AppRoutePaths.gridViewHome,
       path: AppRoutePaths.gridViewHome,

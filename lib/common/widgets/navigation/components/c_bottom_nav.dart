@@ -26,7 +26,7 @@ class CBottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     return NavigationBar(
       selectedIndex: selectedIndex,
-      indicatorColor: AppColors.primaryLightColor,
+      indicatorColor: AppColors.primaryColor,
       onDestinationSelected: onDestinationSelected,
       destinations: <NavigationDestination>[
         const NavigationDestination(

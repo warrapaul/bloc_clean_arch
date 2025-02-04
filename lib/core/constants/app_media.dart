@@ -9,4 +9,5 @@ class AppMedia {
   static const onBoardingGettingStarted = '$baseImgUrl/onboarding/on3.svg';
   static const onBoardingTerms = '$baseImgUrl/onboarding/on4.svg';
 
+  static const appLogo = '$baseImgUrl/icons_logos/basicme_logo.png';
 }

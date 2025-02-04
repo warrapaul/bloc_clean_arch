@@ -37,7 +37,6 @@ class AppRoutePaths {
   static const String settings = '/settings';
   static const String editProfile = '/profile/edit';
 
-
   // List of public routes that don't require authentication
   static const List<String> publicRoutes = [
     login,
@@ -51,7 +50,6 @@ class AppRoutePaths {
     newsSearch,
     dummyPosts,
     dummyPostDetail,
-
   ];
 
   // c widgets
@@ -67,10 +65,13 @@ class AppRoutePaths {
   static const shimmerHome = '/shimmerHome';
   static const crouselSlider = '/crouselSlider';
   static const gridViewHome = '/gridViewHome';
+  //  app widgets
+  static const appWidgetsHome = '/appWidgetsPage';
+
+
 
   //firebase
   static const notifications = '/notifications';
-
 
   // newsApi routes
   static const newsEverything = '/everything';
@@ -81,11 +82,8 @@ class AppRoutePaths {
   static const dummyPostDetailName = 'dummy-posts-id';
   static const dummyPostsHome = '/dummy-posts-home';
 
-
-
   //home
-  static const String initialRoute = cWidgets; // home;
-
+  static const String initialRoute = dummyPostsHome ; // home;  appWidgetsHome
 }
 
 class AppRouter {
@@ -107,7 +105,7 @@ class AppRouter {
       ...CWidgetRoutes.routes,
       ...UserRoutes.routes,
       ...CFirebaseRoutes.routes,
-      //news api and dummy posts 
+      //news api and dummy posts
       ...NewsRoutes.routes,
     ],
     // redirect: (BuildContext context, GoRouterState state) {
