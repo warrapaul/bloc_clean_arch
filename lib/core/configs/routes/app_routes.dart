@@ -68,8 +68,6 @@ class AppRoutePaths {
   //  app widgets
   static const appWidgetsHome = '/appWidgetsPage';
 
-
-
   //firebase
   static const notifications = '/notifications';
 
@@ -81,9 +79,12 @@ class AppRoutePaths {
   static const dummyPostDetail = '/dummy-posts/:id';
   static const dummyPostDetailName = 'dummy-posts-id';
   static const dummyPostsHome = '/dummy-posts-home';
+  static const infiniteScrollHomePage = '/infiniteScrollHomePage';
 
+  // chat messaging
+  static const chatMessaging = '/chat-messaging-home';
   //home
-  static const String initialRoute = dummyPostsHome ; // home;  appWidgetsHome
+  static const String initialRoute =    chatMessaging; // home;  appWidgetsHome
 }
 
 class AppRouter {

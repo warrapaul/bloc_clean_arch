@@ -7,16 +7,25 @@ import 'package:bloc_clean_arch/common/widgets/dialogs/dialog_home.dart';
 import 'package:bloc_clean_arch/common/widgets/forms/basic_form_1.dart';
 import 'package:bloc_clean_arch/common/widgets/gridView/grid_view_home.dart';
 import 'package:bloc_clean_arch/common/widgets/images/images_home.dart';
+import 'package:bloc_clean_arch/common/widgets/infinite_scroll/infinite_scroll_home.dart';
 import 'package:bloc_clean_arch/common/widgets/shimmer/shimmer_home.dart';
 import 'package:bloc_clean_arch/common/widgets/tabs/basic_tab_bars.dart';
 import 'package:bloc_clean_arch/common/widgets/test/test_one.dart';
 import 'package:bloc_clean_arch/core/configs/routes/app_routes.dart';
+import 'package:bloc_clean_arch/features/chat_messaging/presentation/pages/chat_message_home.dart';
 import 'package:bloc_clean_arch/features/reusable_widgets/app_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class CWidgetRoutes {
   static List<GoRoute> routes = [
+    GoRoute(
+      name: AppRoutePaths.infiniteScrollHomePage,
+      path: AppRoutePaths.infiniteScrollHomePage,
+      builder: (BuildContext context, GoRouterState state) {
+        return InfiniteScrollHomePage();
+      },
+    ),
     GoRoute(
       name: AppRoutePaths.appWidgetsHome,
       path: AppRoutePaths.appWidgetsHome,
@@ -106,6 +115,13 @@ class CWidgetRoutes {
       path: AppRoutePaths.testOne,
       builder: (BuildContext context, GoRouterState state) {
         return TestOne();
+      },
+    ),
+    GoRoute(
+      name: AppRoutePaths.chatMessaging,
+      path: AppRoutePaths.chatMessaging,
+      builder: (BuildContext context, GoRouterState state) {
+        return ChatMessageHomePage();
       },
     ),
   ];

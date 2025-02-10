@@ -27,10 +27,11 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<OnboardingCubit>()..checkStatus(),
         ),
-        BlocProvider(
-          create: (context) =>
-              sl<DummyPostsCubit>()..getDummyPosts(FilterDummyPostsReqParams()),
-        ),
+        // BlocProvider(
+        //   create: (context) =>
+        //       sl<DummyPostsCubit>()..getDummyPosts(FilterDummyPostsReqParams()),
+        // ),
+        BlocProvider(create: (context) => sl<DummyPostsCubit>()),
         BlocProvider(
           create: (context) => sl<DummyPostTagsCubit>()..getDummyPostTags(),
         ),
