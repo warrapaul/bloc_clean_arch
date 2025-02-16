@@ -1,10 +1,8 @@
 import 'package:bloc_clean_arch/core/error/failure.dart';
-import 'package:bloc_clean_arch/features/dummy_posts/data/datasources/dummy_post_tags_datasource.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/datasources/dummy_posts_datasource.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/dummy_post_model.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/filter_dummy_posts_req_params.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/domain/entities/dummy_post.dart';
-import 'package:bloc_clean_arch/features/dummy_posts/domain/entities/dummy_post_tag.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/domain/repositories/dummy_post_repository.dart';
 import 'package:dartz/dartz.dart';
 

@@ -20,8 +20,4 @@ class GetDummyPostsByTagUseCase extends UseCase<
       return Left(Failure(message: 'Tag is required'));
     }
   }
-  // Future<Either<Failure, List<DummyPost>>> call(
-  //     {required FilterDummyPostsReqParams param}) async {
-  //   return await dummyPostRepository.getDummyPostsByTag(param);
-  // }
 }

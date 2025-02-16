@@ -1,8 +1,12 @@
 class ApiUrlsConstants {
   // static const baseUrl = 'http://localhost:3000/proj/';
-  // static const baseUrl = 'https://poodle-lasting-tadpole.ngrok-free.app/proj/';
-  static const baseUrl = 'https://dummyjson.com/';
+  static const baseUrl = 'https://poodle-lasting-tadpole.ngrok-free.app/proj/';
+  // ngrok http --url=poodle-lasting-tadpole.ngrok-free.app 80
+  // static const baseUrl = 'https://dummyjson.com/';
   // static const baseUrl = 'https://newsapi.org/v2/';
+
+  static const socketUrl = 'https://poodle-lasting-tadpole.ngrok-free.app/chat';
+  static const socketPath = '/proj/socket.io';
 
   static const loginUrl = 'auth/login';
   static const registerUrl = 'auth/signup';
@@ -20,6 +24,10 @@ class ApiUrlsConstants {
   static const dummyPostByTag = 'posts/tag'; //:tag
 
   // 'https://dummyjson.com/posts/tag/life'
+
+  // CHAT MESSAGING
+  static const fetchPreviousChatMessages = 'posts';
+
 
   static const List<String> publicUrls = [
     // List of public URLs that don't require authentication

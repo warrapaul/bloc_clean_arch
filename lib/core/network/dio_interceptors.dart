@@ -22,7 +22,7 @@ class LoggerInterceptor extends Interceptor {
     final serverMessage = message is List ? message.join(', ') : message?.toString();
 
     logger.e('''
-        REQUEST ERROR
+        HTTP REQUEST ERROR
         URL: ${options.baseUrl}${options.path}
         Method: ${options.method}
         Payload: ${options.data ?? "No Payload"}
@@ -38,7 +38,7 @@ class LoggerInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     logger.i('''
-        OUTGOING REQUEST
+        OUTGOING HTTP REQUEST
         URL: ${options.baseUrl}${options.path}
         Method: ${options.method}
         Payload: ${options.data ?? "No Payload"}
@@ -57,7 +57,7 @@ class LoggerInterceptor extends Interceptor {
     // ''');
 
      logger.d('''
-      RESPONSE
+      HTTP RESPONSE
       Status: ${response.statusCode} - ${response.statusMessage}
       Data: uncomment onResponse in Logger Interceptor
     ''');

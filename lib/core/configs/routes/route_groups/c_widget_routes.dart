@@ -13,6 +13,7 @@ import 'package:bloc_clean_arch/common/widgets/tabs/basic_tab_bars.dart';
 import 'package:bloc_clean_arch/common/widgets/test/test_one.dart';
 import 'package:bloc_clean_arch/core/configs/routes/app_routes.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/presentation/pages/chat_message_home.dart';
+import 'package:bloc_clean_arch/features/chat_messaging/presentation/pages/chat_message_t.dart';
 import 'package:bloc_clean_arch/features/reusable_widgets/app_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -121,7 +122,7 @@ class CWidgetRoutes {
       name: AppRoutePaths.chatMessaging,
       path: AppRoutePaths.chatMessaging,
       builder: (BuildContext context, GoRouterState state) {
-        return ChatMessageHomePage();
+        return ChatMessageT(); //ChatMessageHomePage();
       },
     ),
   ];

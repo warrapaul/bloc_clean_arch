@@ -1,5 +1,5 @@
 import 'package:bloc_clean_arch/core/network/dio_execption_handlers.dart';
-import 'package:bloc_clean_arch/core/network/interceptors.dart';
+import 'package:bloc_clean_arch/core/network/dio_interceptors.dart';
 import 'package:bloc_clean_arch/core/constants/api_urls_constants.dart';
 import 'package:dio/dio.dart';
 

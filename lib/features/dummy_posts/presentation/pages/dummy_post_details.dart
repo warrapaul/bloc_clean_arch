@@ -1,4 +1,3 @@
-import 'package:bloc_clean_arch/core/configs/routes/app_routes.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/cubit/dummy_posts/dummy_posts_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

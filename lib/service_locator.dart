@@ -1,4 +1,5 @@
 import 'package:bloc_clean_arch/core/network/dio_client.dart';
+import 'package:bloc_clean_arch/core/network/socket_io_client.dart';
 import 'package:bloc_clean_arch/core/theme/cubit/theme_cubit.dart';
 import 'package:bloc_clean_arch/core/theme/repository/theme_repository.dart';
 import 'package:bloc_clean_arch/features/auth/data/data_source/auth_api_service.dart';
@@ -10,6 +11,15 @@ import 'package:bloc_clean_arch/features/auth/domain/usecase/is_logged_in.dart';
 import 'package:bloc_clean_arch/features/auth/domain/usecase/logout.dart';
 import 'package:bloc_clean_arch/features/auth/domain/usecase/login.dart';
 import 'package:bloc_clean_arch/features/auth/domain/usecase/signup.dart';
+import 'package:bloc_clean_arch/features/chat_messaging/data/datasources/chat_message_datasource.dart';
+import 'package:bloc_clean_arch/features/chat_messaging/data/repositories/chat_message_repository_impl.dart';
+import 'package:bloc_clean_arch/features/chat_messaging/domain/repositories/chat_message_repository.dart';
+import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/connect_chat_message_socket.dart';
+import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/disconnect_chat_message_socket.dart';
+import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/fetch_previous_chat_messages.dart';
+import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/listen_to_chat_messages.dart';
+import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/send_chat_message.dart';
+import 'package:bloc_clean_arch/features/chat_messaging/presentation/bloc/chat_socket_bloc.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/datasources/dummy_post_tags_datasource.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/datasources/dummy_posts_datasource.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/repositories/dummy_post_tags_repository_impl.dart';
@@ -160,8 +170,8 @@ void setUpServiceLocator(
       ));
 
   sl.registerFactory<DummyPostsSearchBloc>(() => DummyPostsSearchBloc(
-      searchDummyPostsUserCase: sl<SearchDummyPostsUserCase>(),
-  ));
+        searchDummyPostsUserCase: sl<SearchDummyPostsUserCase>(),
+      ));
 
   // ----------------dummy post tags
   sl.registerSingleton<DummyPostTagsDatasource>(
@@ -175,4 +185,34 @@ void setUpServiceLocator(
   sl.registerFactory<DummyPostTagsCubit>(() => DummyPostTagsCubit(
         getDummyPostTagsUseCase: sl<GetDummyPostTagsUseCase>(),
       ));
+
+  // ---------------- chat messages & sockets
+  sl.registerSingleton<SocketIoClient>(
+      SocketIoClient(tokenManager: sl<AuthTokenManager>()));
+
+  sl.registerSingleton<ChatMessageDatasource>(
+      ChatMessageDatasourceImpl(socketIoClient: sl<SocketIoClient>(), dioClient: sl<DioClient>()));
+
+  sl.registerSingleton<ChatMessageRepository>(
+      ChatMessageRepositoryImpl(chatMessageDatasource: sl<ChatMessageDatasource>()));
+
+
+  sl.registerSingleton<ConnectChatMessageSocketUsecase>(
+      ConnectChatMessageSocketUsecase(chatMessageRepository: sl<ChatMessageRepository>()));
+  sl.registerSingleton<DisconnectChatMessageSocketUsecase>(
+        DisconnectChatMessageSocketUsecase(chatMessageRepository: sl<ChatMessageRepository>()));
+  sl.registerSingleton<FetchPreviousChatMessagesUsecase>(
+        FetchPreviousChatMessagesUsecase(chatMessageRepository: sl<ChatMessageRepository>()));
+  sl.registerSingleton<SendChatMessageSocketUsecase>(
+      SendChatMessageSocketUsecase(chatMessageRepository: sl<ChatMessageRepository>()));
+  sl.registerSingleton<ListenToChatMessagesUsecase>(
+    ListenToChatMessagesUsecase(chatMessageRepository: sl<ChatMessageRepository>()));
+
+  sl.registerFactory<ChatSocketBloc>(() => ChatSocketBloc(
+      sendChatMessageUsecase: sl<SendChatMessageSocketUsecase>(),
+      disconnectChatMessageSocketUsecase: sl<DisconnectChatMessageSocketUsecase>(),
+      connectChatMessageSocketUsecase: sl<ConnectChatMessageSocketUsecase>(),
+      fetchPreviousChatMessagesUsecase: sl<FetchPreviousChatMessagesUsecase>(),
+      listenToChatMessagesUsecase: sl<ListenToChatMessagesUsecase>(),
+    ));
 }

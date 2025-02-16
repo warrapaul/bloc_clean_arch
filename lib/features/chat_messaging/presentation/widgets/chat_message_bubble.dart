@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/features/chat_messaging/data/models/chat_message_model.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/domain/entity/chat_message.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/presentation/widgets/full_screen_image_preview.dart';
 import 'package:flutter/material.dart';

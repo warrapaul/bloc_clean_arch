@@ -9,8 +9,4 @@ abstract class DummyPostRepository {
   Future<Either<Failure, DummyPost>> getDummyPostById(int id);
   Future<Either<Failure, List<DummyPost>>> getDummyPostsByTag(FilterDummyPostsReqParams param);
 
-  // 'https://dummyjson.com/posts/tag/life'
-  // 'https://dummyjson.com/posts/user/5'   //getDummyPostsByUser
-  // 'https://dummyjson.com/posts/1/comments'  //getDummyPostComments
-  // CRUD POSTS
 }
