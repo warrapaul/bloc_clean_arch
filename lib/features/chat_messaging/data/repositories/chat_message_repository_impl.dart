@@ -9,7 +9,19 @@ import 'package:dartz/dartz.dart';
 class ChatMessageRepositoryImpl extends ChatMessageRepository {
   final ChatMessageDatasource chatMessageDatasource;
 
+
   ChatMessageRepositoryImpl({required this.chatMessageDatasource});
+
+  @override
+  Future<Either<Failure, String>> initializeSocketConnection() async {
+    try {
+      String status = await chatMessageDatasource.initializeSocketConnection();
+      return Right(status);
+    } catch (e) {
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
   @override
   Future<Either<Failure, String>> connect() async {
     try {
@@ -82,4 +94,6 @@ class ChatMessageRepositoryImpl extends ChatMessageRepository {
     return Left(Failure(message: e.toString()));
   }
   }
+  
+
 }

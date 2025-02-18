@@ -1,5 +1,6 @@
 import 'package:bloc_clean_arch/core/constants/api_urls_constants.dart';
 import 'package:bloc_clean_arch/core/network/dio_client.dart';
+import 'package:bloc_clean_arch/core/network/dio_execption_handlers.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/dummy_post_model.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/dummy_post_tag_model.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/filter_dummy_posts_req_params.dart';
@@ -10,7 +11,8 @@ abstract class DummyPostsDatasource {
   Future<List<DummyPostModel>> searchDummyPosts(
       FilterDummyPostsReqParams param);
   Future<DummyPostModel> getDummyPostById(int id);
-  Future<List<DummyPostModel>> getDummyPostsByTag(FilterDummyPostsReqParams param);
+  Future<List<DummyPostModel>> getDummyPostsByTag(
+      FilterDummyPostsReqParams param);
 }
 
 class DummyPostsDatasourceImpl implements DummyPostsDatasource {
@@ -35,7 +37,11 @@ class DummyPostsDatasourceImpl implements DummyPostsDatasource {
           jsonData.map((json) => DummyPostModel.fromJson(json)).toList();
       return dummyPostModels;
     } catch (e) {
-      throw Exception('Error fetching dummy posts ${e.toString()}');
+      if (e is ApiException) {
+        rethrow;
+      }
+      throw ApiException(
+          message: 'Error fetching dummy posts: ${e.toString()}');
     }
   }
 
@@ -75,7 +81,8 @@ class DummyPostsDatasourceImpl implements DummyPostsDatasource {
   }
 
   @override
-  Future<List<DummyPostModel>> getDummyPostsByTag(FilterDummyPostsReqParams param) async {
+  Future<List<DummyPostModel>> getDummyPostsByTag(
+      FilterDummyPostsReqParams param) async {
     try {
       Map<String, dynamic> parameters = {
         'limit': param.pageSize,
@@ -85,13 +92,12 @@ class DummyPostsDatasourceImpl implements DummyPostsDatasource {
       }..removeWhere((key, value) => value == null);
 
       Response response = await dioClient.get(
-        '${ApiUrlsConstants.dummyPostByTag}/${Uri.encodeComponent(param.tag ?? '')}',
+          '${ApiUrlsConstants.dummyPostByTag}/${Uri.encodeComponent(param.tag ?? '')}',
           queryParameters: parameters);
       List<dynamic> jsonData = response.data['posts'];
       List<DummyPostModel> dummyPostModels =
           jsonData.map((json) => DummyPostModel.fromJson(json)).toList();
       return dummyPostModels;
-      
     } catch (e) {
       throw Exception('Error fetching posts by tag: ${e.toString()}');
     }

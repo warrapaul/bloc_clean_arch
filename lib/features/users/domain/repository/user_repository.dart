@@ -4,6 +4,7 @@ import 'package:bloc_clean_arch/features/users/data/models/user_model.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class UserRepository {
-  Future<Either<CustomNetworkException, UserModel>>  getUserProfile();
-  Future<Either<CustomNetworkException, UserModel>> updateUserProfile(UpdateUserReqParams updateUserReqParams);
+  Future<Either<ApiException, UserModel>> getUserProfile();
+  Future<Either<ApiException, UserModel>> updateUserProfile(
+      UpdateUserReqParams updateUserReqParams);
 }

@@ -14,12 +14,11 @@ class ButtonCubit extends Cubit<ButtonState> {
     try {
       emit(ButtonLoading());
       // await Future.delayed(const Duration(seconds: 3));
-      Either<CustomNetworkException, dynamic> result =
+      Either<ApiException, dynamic> result =
           await usecase.call(param: params);
       result.fold((error) {
         // emit(ButtonFailure(errorMessage: error.message));
         emit(ButtonFailure(errorMessage: error.message));
-
       }, (data) {
         emit(ButtonSucess());
       });

@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/common/widgets/error_view.dart';
 import 'package:bloc_clean_arch/common/widgets/search/ad_bloc_search_delegate.dart';
 import 'package:bloc_clean_arch/common/widgets/search/simple_bloc_search_delegate.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/filter_dummy_posts_req_params.dart';
@@ -108,8 +109,8 @@ class _DummyPostsHomePageState extends State<DummyPostsHomePage> {
                             itemBuilder: (context, index) =>
                                 DummyPostCard(post: state.dummyPosts[index]),
                           ),
-                        DummyPostsLoadFailureState() => Center(
-                            child: Text('Error: ${state.message}'),
+                        DummyPostsLoadFailureState() => ErrorViewWidget(
+                            message: state.error.message,
                           ),
                         _ => const SizedBox()
                       },

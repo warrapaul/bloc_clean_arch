@@ -12,11 +12,9 @@ class SocketIoClient {
   Future<void> get initialized => _initCompleter.future;
   int _reconnectionAttempts = 0;
 
-  SocketIoClient({required this.tokenManager}) {
-    _initSocket();
-  }
+  SocketIoClient({required this.tokenManager}) {}
 
-  Future<void> _initSocket() async {
+  Future<void> initSocket() async {
     try {
       const authToken =
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYTMyNThkNy0zOTExLTQzYzMtOTNiZC03NDEyODE5ZTUyYTIiLCJlbWFpbCI6IndhcmFwYXVsQGdtYWlsLmNvbSIsImlhdCI6MTczOTYyMTcyNCwiZXhwIjoxNzQ1NjY5NzI0fQ.dwBW20rft-Y__D35D9OjoFIL3zVk0qMIhp_4Su7Mm64';
@@ -108,7 +106,7 @@ class SocketIoClient {
       _logger.logReceive('message', data);
     });
 
-    _socket?.on('broadcastMessage', (data) {
+    _socket?.on('message:new', (data) {
       _logger.logReceive('broadcastMessage', data);
     });
 

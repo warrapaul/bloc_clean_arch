@@ -10,12 +10,12 @@ class UserRepositoryImpl extends UserRepository {
   final UserApiService _userApiService = sl<UserApiService>();
 
   @override
-  Future<Either<CustomNetworkException, UserModel>> getUserProfile() async {
+  Future<Either<ApiException, UserModel>> getUserProfile() async {
     return await _userApiService.getUserProfile();
   }
 
   @override
-  Future<Either<CustomNetworkException, UserModel>> updateUserProfile(
+  Future<Either<ApiException, UserModel>> updateUserProfile(
       UpdateUserReqParams updateUserReqParams) async {
     return await _userApiService.updateUserProfile(updateUserReqParams);
   }

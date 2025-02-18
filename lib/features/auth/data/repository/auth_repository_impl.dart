@@ -15,9 +15,9 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthTokenManager _authTokenManager = sl<AuthTokenManager>();
 
   @override
-  Future<Either<CustomNetworkException, dynamic>> signUp(
+  Future<Either<ApiException, dynamic>> signUp(
       SignupReqParams signupReqParams) async {
-    Either<CustomNetworkException, dynamic> result =
+    Either<ApiException, dynamic> result =
         await _authApiService.signUp(signupReqParams);
     return result.fold((error) {
       return Left(error);
@@ -39,9 +39,9 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<CustomNetworkException, dynamic>> login(
+  Future<Either<ApiException, dynamic>> login(
       LoginReqParams loginReqParams) async {
-    Either<CustomNetworkException, dynamic> result =
+    Either<ApiException, dynamic> result =
         await _authApiService.login(loginReqParams);
     return result.fold((error) {
       return Left(error);

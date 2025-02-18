@@ -17,6 +17,7 @@ import 'package:bloc_clean_arch/features/chat_messaging/domain/repositories/chat
 import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/connect_chat_message_socket.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/disconnect_chat_message_socket.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/fetch_previous_chat_messages.dart';
+import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/initialize_socket_connection.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/listen_to_chat_messages.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/send_chat_message.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/presentation/bloc/chat_socket_bloc.dart';
@@ -207,6 +208,8 @@ void setUpServiceLocator(
       SendChatMessageSocketUsecase(chatMessageRepository: sl<ChatMessageRepository>()));
   sl.registerSingleton<ListenToChatMessagesUsecase>(
     ListenToChatMessagesUsecase(chatMessageRepository: sl<ChatMessageRepository>()));
+  sl.registerSingleton<InitializeSocketConnectionUsecase>(InitializeSocketConnectionUsecase(
+      chatMessageRepository: sl<ChatMessageRepository>()));
 
   sl.registerFactory<ChatSocketBloc>(() => ChatSocketBloc(
       sendChatMessageUsecase: sl<SendChatMessageSocketUsecase>(),
@@ -214,5 +217,6 @@ void setUpServiceLocator(
       connectChatMessageSocketUsecase: sl<ConnectChatMessageSocketUsecase>(),
       fetchPreviousChatMessagesUsecase: sl<FetchPreviousChatMessagesUsecase>(),
       listenToChatMessagesUsecase: sl<ListenToChatMessagesUsecase>(),
+      initializeSocketConnectionUsecase: sl<InitializeSocketConnectionUsecase>(),
     ));
 }

@@ -8,15 +8,15 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 abstract class AuthApiService {
-  Future<Either<CustomNetworkException, dynamic>> signUp(
+  Future<Either<ApiException, dynamic>> signUp(
       SignupReqParams signupReqParams);
-  Future<Either<CustomNetworkException, dynamic>> login(
+  Future<Either<ApiException, dynamic>> login(
       LoginReqParams loginReqParams);
 }
 
 class AuthApiServiceImpl implements AuthApiService {
   @override
-  Future<Either<CustomNetworkException, dynamic>> signUp(
+  Future<Either<ApiException, dynamic>> signUp(
       SignupReqParams signupReqParams) async {
     try {
       var response = await sl<DioClient>().post(
@@ -25,19 +25,19 @@ class AuthApiServiceImpl implements AuthApiService {
       );
       return Right(response);
     } catch (e) {
-      return Left(e as CustomNetworkException);
+      return Left(e as ApiException);
     }
   }
 
   @override
-  Future<Either<CustomNetworkException, dynamic>> login(
+  Future<Either<ApiException, dynamic>> login(
       LoginReqParams loginReqParams) async {
     try {
       var response = await sl<DioClient>()
           .post(ApiUrlsConstants.loginUrl, data: loginReqParams.toJson());
       return Right(response);
     } catch (e) {
-      return Left(e as CustomNetworkException);
+      return Left(e as ApiException);
     }
   }
 }

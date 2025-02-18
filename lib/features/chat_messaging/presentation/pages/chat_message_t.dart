@@ -42,6 +42,7 @@ class _ChatMessageTState extends State<ChatMessageT> {
       providers: [
         BlocProvider(
           create: (_) => sl<ChatSocketBloc>()
+            ..add(InitializeChatSocket())
             ..add(ConnectChatSocket())
             ..add(ChatFetchPreviousMessages(
               params: FilterChatMessagesReqParams(

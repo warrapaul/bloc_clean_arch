@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/common/widgets/error_view.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/cubit/dummy_posts/dummy_posts_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +16,6 @@ class _DummyPostDetailsPageState extends State<DummyPostDetailsPage> {
   void initState() {
     super.initState();
     context.read<DummyPostsCubit>().getDummyPostById(widget.postId);
-
   }
 
   @override
@@ -53,9 +53,8 @@ class _DummyPostDetailsPageState extends State<DummyPostDetailsPage> {
                   ],
                 ),
               ),
-            DummyPostsLoadFailureState() => Center(
-                child: Text('Error loading post: ${state.message}'),
-              ),
+            DummyPostsLoadFailureState() =>
+              Center(child: ErrorViewWidget(message: state.error.message)),
             _ => const SizedBox()
           };
         },

@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:bloc_clean_arch/core/network/dio_execption_handlers.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/filter_dummy_posts_req_params.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/domain/entities/dummy_post.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/domain/usecases/get_dummy_post_by_id.dart';
@@ -22,55 +23,32 @@ class DummyPostsCubit extends Cubit<DummyPostsState> {
     required this.getDummyPostsByTagUseCase,
   }) : super(DummyPostsInitialState());
 
+
   Future<void> getDummyPosts(FilterDummyPostsReqParams param) async {
     emit(DummyPostsLoadingState());
-    try {
-      final result = await getDummyPostsUseCase(param: param);
-      result.fold(
-          (failure) =>
-              emit(DummyPostsLoadFailureState(message: failure.message)),
-          (data) => emit(DummyPostsLoadSuccessState(dummyPosts: data)));
-    } catch (e) {
-      emit(DummyPostsLoadFailureState(message: e.toString()));
-    }
+    final result = await getDummyPostsUseCase(param: param);
+    result.fold((error) => emit(DummyPostsLoadFailureState(error: error)),
+        (data) => emit(DummyPostsLoadSuccessState(dummyPosts: data)));
   }
 
   Future<void> searchDummyPosts(FilterDummyPostsReqParams param) async {
     emit(DummyPostsLoadingState());
-    try {
-      final result = await searchDummyPostsUserCase(param: param);
-      result.fold(
-          (failure) =>
-              emit(DummyPostsLoadFailureState(message: failure.message)),
-          (data) => emit(DummyPostsLoadSuccessState(dummyPosts: data)));
-    } catch (e) {
-      emit(DummyPostsLoadFailureState(message: e.toString()));
-    }
+    final result = await searchDummyPostsUserCase(param: param);
+    result.fold((error) => emit(DummyPostsLoadFailureState(error: error)),
+        (data) => emit(DummyPostsLoadSuccessState(dummyPosts: data)));
   }
 
   Future<void> getDummyPostById(int id) async {
     emit(DummyPostsLoadingState());
-    try {
-      final result = await getDummyPostByIdUseCase(param: id);
-      result.fold(
-          (failure) =>
-              emit(DummyPostsLoadFailureState(message: failure.message)),
-          (data) => emit(DummyPostDetailsLoadSuccessState(dummyPost: data)));
-    } catch (e) {
-      emit(DummyPostsLoadFailureState(message: e.toString()));
-    }
+    final result = await getDummyPostByIdUseCase(param: id);
+    result.fold((error) => emit(DummyPostsLoadFailureState(error: error)),
+        (data) => emit(DummyPostDetailsLoadSuccessState(dummyPost: data)));
   }
 
   Future<void> getDummyPostsByTag(FilterDummyPostsReqParams param) async {
     emit(DummyPostsLoadingState());
-    try {
-      final result = await getDummyPostsByTagUseCase(param: param);
-      result.fold(
-          (failure) =>
-              emit(DummyPostsLoadFailureState(message: failure.message)),
-          (data) => emit(DummyPostsLoadSuccessState(dummyPosts: data)));
-    } catch (e) {
-      emit(DummyPostsLoadFailureState(message: e.toString()));
-    }
+    final result = await getDummyPostsByTagUseCase(param: param);
+    result.fold((error) => emit(DummyPostsLoadFailureState(error: error)),
+        (data) => emit(DummyPostsLoadSuccessState(dummyPosts: data)));
   }
 }

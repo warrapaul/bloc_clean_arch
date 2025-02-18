@@ -14,9 +14,8 @@ final class DummyPostsLoadSuccessState extends DummyPostsState {
 }
 
 final class DummyPostsLoadFailureState extends DummyPostsState {
-  final String message;
-
-  DummyPostsLoadFailureState({required this.message});
+  final ApiException error;
+  DummyPostsLoadFailureState({required this.error});
 }
 
 final class DummyPostDetailsLoadSuccessState extends DummyPostsState {

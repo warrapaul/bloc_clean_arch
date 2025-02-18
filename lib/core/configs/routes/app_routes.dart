@@ -84,7 +84,7 @@ class AppRoutePaths {
   // chat messaging
   static const chatMessaging = '/chat-messaging-home';
   //home
-  static const String initialRoute =    chatMessaging; // home;  appWidgetsHome
+  static const String initialRoute =    dummyPosts; // home;  appWidgetsHome
 }
 
 class AppRouter {

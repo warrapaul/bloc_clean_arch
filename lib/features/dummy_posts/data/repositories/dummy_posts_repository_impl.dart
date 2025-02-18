@@ -1,4 +1,5 @@
 import 'package:bloc_clean_arch/core/error/failure.dart';
+import 'package:bloc_clean_arch/core/network/dio_execption_handlers.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/datasources/dummy_posts_datasource.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/dummy_post_model.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/filter_dummy_posts_req_params.dart';
@@ -12,7 +13,7 @@ class DummyPostsRepositoryImpl implements DummyPostRepository {
   DummyPostsRepositoryImpl({required this.dummyPostsDatasource});
 
   @override
-  Future<Either<Failure, List<DummyPost>>> getDummyPosts(
+  Future<Either<ApiException, List<DummyPost>>> getDummyPosts(
       FilterDummyPostsReqParams param) async {
     try {
       List<DummyPostModel> postModels =
@@ -21,12 +22,12 @@ class DummyPostsRepositoryImpl implements DummyPostRepository {
           postModels.map((postModel) => postModel.toEntity()).toList();
       return Right(posts);
     } catch (e) {
-      return Left(Failure(message: e.toString()));
+      return Left(e as ApiException);
     }
   }
 
   @override
-  Future<Either<Failure, List<DummyPost>>> searchDummyPosts(
+  Future<Either<ApiException, List<DummyPost>>> searchDummyPosts(
       FilterDummyPostsReqParams param) async {
     try {
       List<DummyPostModel> postModels =
@@ -35,29 +36,32 @@ class DummyPostsRepositoryImpl implements DummyPostRepository {
           postModels.map((postModel) => postModel.toEntity()).toList();
       return Right(posts);
     } catch (e) {
-      return Left(Failure(message: e.toString()));
+      return Left(ApiException(message: e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, DummyPost>> getDummyPostById(int id) async {
+  Future<Either<ApiException, DummyPost>> getDummyPostById(int id) async {
     try {
       DummyPostModel postModel =
           await dummyPostsDatasource.getDummyPostById(id);
       return Right(postModel.toEntity());
     } catch (e) {
-      return Left(Failure(message: e.toString()));
+      return Left(ApiException(message: e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, List<DummyPost>>> getDummyPostsByTag(FilterDummyPostsReqParams param) async {
+  Future<Either<ApiException, List<DummyPost>>> getDummyPostsByTag(
+      FilterDummyPostsReqParams param) async {
     try {
-      List<DummyPostModel> postModels =  await dummyPostsDatasource.getDummyPostsByTag(param);
-      List<DummyPost> posts = postModels.map((postModel) => postModel.toEntity()).toList();
+      List<DummyPostModel> postModels =
+          await dummyPostsDatasource.getDummyPostsByTag(param);
+      List<DummyPost> posts =
+          postModels.map((postModel) => postModel.toEntity()).toList();
       return Right(posts);
     } catch (e) {
-      return Left(Failure(message: e.toString()));
+      return Left(ApiException(message: e.toString()));
     }
   }
 }

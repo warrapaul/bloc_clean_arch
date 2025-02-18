@@ -1,4 +1,4 @@
-import 'package:bloc_clean_arch/core/error/failure.dart';
+import 'package:bloc_clean_arch/core/network/dio_execption_handlers.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/datasources/dummy_post_tags_datasource.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/dummy_post_tag_model.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/domain/entities/dummy_post_tag.dart';
@@ -10,7 +10,7 @@ class DummyPostTagsRepositoryImpl extends DummyPostTagsRepository {
 
   DummyPostTagsRepositoryImpl({required this.dummyPostTagsDatasource});
   @override
-  Future<Either<Failure, List<DummyPostTag>>> getDummyPostTags() async {
+  Future<Either<ApiException, List<DummyPostTag>>> getDummyPostTags() async {
     try {
       List<DummyPostTagModel> tagModels =
           await dummyPostTagsDatasource.getDummyPostTags();
@@ -18,7 +18,7 @@ class DummyPostTagsRepositoryImpl extends DummyPostTagsRepository {
           tagModels.map((model) => model.toEntity()).toList();
       return Right(tags);
     } catch (e) {
-      return Left(Failure(message: e.toString()));
+      return Left(ApiException(message: e.toString()));
     }
   }
 }

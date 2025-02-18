@@ -4,6 +4,7 @@ import 'package:bloc_clean_arch/features/chat_messaging/domain/entity/chat_messa
 import 'package:dartz/dartz.dart';
 
 abstract class ChatMessageRepository {
+  Future<Either<Failure, String>> initializeSocketConnection();
   Future<Either<Failure, String>> connect();
   Future<Either<Failure, String>> disconnect();
   Future<Either<Failure, ChatMessage>> sendMessage(ChatMessage message);

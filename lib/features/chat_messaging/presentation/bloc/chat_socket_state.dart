@@ -13,6 +13,10 @@ final class ChatSocketInitial extends ChatSocketState {
   const ChatSocketInitial() : super();
 }
 
+final class ChatSocketInitializing extends ChatSocketState {
+  const ChatSocketInitializing({required super.messages});
+}
+
 final class ChatSocketConnecting extends ChatSocketState {
   const ChatSocketConnecting({required super.messages});
 }

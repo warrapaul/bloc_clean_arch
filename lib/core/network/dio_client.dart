@@ -35,6 +35,7 @@ class DioClient {
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
+
       return response;
     } catch (e) {
       throw _handleError(e);
@@ -135,11 +136,10 @@ class DioClient {
     }
   }
 
-  CustomNetworkException _handleError(dynamic error) {
+  ApiException _handleError(dynamic error) {
     if (error is DioException) {
-      return CustomNetworkException.fromDioException(error);
+      return ApiException.fromDioException(error);
     }
-    return CustomNetworkException(
-        'An unexpected error occurred: ${error.toString()}');
+    return ApiException(message: 'An Error occurred: ${error.toString()}');
   }
 }

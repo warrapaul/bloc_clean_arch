@@ -107,7 +107,7 @@ class _InfiniteScrollHomePageState extends State<InfiniteScrollHomePage> {
             });
 
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
+              SnackBar(content: Text(state.error.message)),
             );
           }
         },

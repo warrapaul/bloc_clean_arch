@@ -8,6 +8,7 @@ import 'package:bloc_clean_arch/features/chat_messaging/domain/repositories/chat
 import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/connect_chat_message_socket.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/disconnect_chat_message_socket.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/fetch_previous_chat_messages.dart';
+import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/initialize_socket_connection.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/listen_to_chat_messages.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/domain/usecases/send_chat_message.dart';
 import 'package:dartz/dartz.dart';
@@ -22,6 +23,7 @@ class ChatSocketBloc extends Bloc<ChatSocketEvent, ChatSocketState> {
   final ConnectChatMessageSocketUsecase connectChatMessageSocketUsecase;
   final FetchPreviousChatMessagesUsecase fetchPreviousChatMessagesUsecase;
   final ListenToChatMessagesUsecase listenToChatMessagesUsecase; 
+  final InitializeSocketConnectionUsecase initializeSocketConnectionUsecase;
 
   // StreamSubscription? _messageSubscription;
   StreamSubscription<Either<Failure, ChatMessage>>? _messageSubscription;
@@ -32,8 +34,10 @@ class ChatSocketBloc extends Bloc<ChatSocketEvent, ChatSocketState> {
     required this.disconnectChatMessageSocketUsecase,
     required this.connectChatMessageSocketUsecase,
     required this.listenToChatMessagesUsecase,
+    required this.initializeSocketConnectionUsecase,
 
   }) : super(ChatSocketInitial()) {
+    on<InitializeChatSocket>(_handleInitializeChatSocket);
     on<ConnectChatSocket>(_handleConnectChatSocket);
     on<DisonnectChatSocket>(_handleDisonnectChatSocket);
     on<ChatSocketEmitMessage>(_handleChatSocketEmitMessage);
@@ -47,6 +51,30 @@ class ChatSocketBloc extends Bloc<ChatSocketEvent, ChatSocketState> {
     await disconnectChatMessageSocketUsecase(param: null);
     return super.close();
   }
+
+FutureOr<void> _handleInitializeChatSocket(
+      InitializeChatSocket event, Emitter<ChatSocketState> emit) async {
+    emit(ChatSocketInitializing(messages: state.messages));
+    try {
+      final result = await initializeSocketConnectionUsecase(param: null);
+      result.fold(
+        (failure) => emit(ChatSocketError(
+          message: failure.message,
+          messages: state.messages,
+        )),
+        (data) {
+          emit(ChatSocketConnected(messages: state.messages));
+          add(ChatSocketListenToMessage());
+        },
+      );
+    } catch (e) {
+      emit(ChatSocketError(
+        message: e.toString(),
+        messages: state.messages,
+      ));
+    }
+  }
+
 
 FutureOr<void> _handleConnectChatSocket(
       ConnectChatSocket event, Emitter<ChatSocketState> emit) async {

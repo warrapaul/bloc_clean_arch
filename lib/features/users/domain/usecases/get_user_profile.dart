@@ -5,9 +5,10 @@ import 'package:bloc_clean_arch/features/users/domain/repository/user_repository
 import 'package:bloc_clean_arch/service_locator.dart';
 import 'package:dartz/dartz.dart';
 
-class GetUserProfileUsecase implements UseCase<Either<CustomNetworkException, UserModel>, dynamic> {
+class GetUserProfileUsecase
+    implements UseCase<Either<ApiException, UserModel>, dynamic> {
   @override
-  Future<Either<CustomNetworkException, UserModel>> call({dynamic param}) {
+  Future<Either<ApiException, UserModel>> call({dynamic param}) {
     return sl<UserRepository>().getUserProfile();
   }
 }

@@ -3,6 +3,8 @@ part of 'chat_socket_bloc.dart';
 @immutable
 sealed class ChatSocketEvent {}
 
+final class InitializeChatSocket extends ChatSocketEvent {}
+
 final class ConnectChatSocket extends ChatSocketEvent {}
 
 final class DisonnectChatSocket extends ChatSocketEvent {}

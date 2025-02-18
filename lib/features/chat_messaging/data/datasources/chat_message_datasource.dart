@@ -12,6 +12,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 abstract class ChatMessageDatasource {
+  Future<String> initializeSocketConnection();
   Future<String> connect();
   Future<String> disconnect();
   Future<ChatMessageModel> sendMessage(ChatMessageModel message);
@@ -39,6 +40,17 @@ class ChatMessageDatasourceImpl extends ChatMessageDatasource {
         _messageController.addError(e);
       }
     });
+  }
+
+    @override
+  Future<String> initializeSocketConnection()  async{
+    try {
+      await socketIoClient.initSocket();
+      return 'socketInitialized';
+    } catch (e) {
+      throw CustomSocketIoException(
+          message: 'Failed to initialize socket: ${e.toString()}');
+    }
   }
 
   @override
@@ -124,4 +136,6 @@ class ChatMessageDatasourceImpl extends ChatMessageDatasource {
       throw Exception('Failed to send message: ${e.toString()}');
     }
   }
+  
+
 }

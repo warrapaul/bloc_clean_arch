@@ -8,14 +8,14 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 abstract class UserApiService {
-  Future<Either<CustomNetworkException, UserModel>> getUserProfile();
-  Future<Either<CustomNetworkException, UserModel>> updateUserProfile(
+  Future<Either<ApiException, UserModel>> getUserProfile();
+  Future<Either<ApiException, UserModel>> updateUserProfile(
       UpdateUserReqParams updateUserReqParams);
 }
 
 class UserApiServiceImpl extends UserApiService {
   @override
-  Future<Either<CustomNetworkException, UserModel>> getUserProfile() async {
+  Future<Either<ApiException, UserModel>> getUserProfile() async {
     try {
       Response response = await sl<DioClient>().get(
         ApiUrlsConstants.userProfileUrl,
@@ -24,12 +24,12 @@ class UserApiServiceImpl extends UserApiService {
       return Right(user);
     } catch (e) {
       print(e);
-      return Left(e as CustomNetworkException);
+      return Left(e as ApiException);
     }
   }
 
   @override
-  Future<Either<CustomNetworkException, UserModel>> updateUserProfile(
+  Future<Either<ApiException, UserModel>> updateUserProfile(
       UpdateUserReqParams updateUserReqParams) async {
     try {
       Response response = await sl<DioClient>().patch(
@@ -39,7 +39,7 @@ class UserApiServiceImpl extends UserApiService {
       final updatedUser = UserModel.fromJson(response.data);
       return Right(updatedUser);
     } catch (e) {
-      return Left(e as CustomNetworkException);
+      return Left(e as ApiException);
     }
   }
 }
