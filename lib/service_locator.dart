@@ -2,15 +2,15 @@ import 'package:bloc_clean_arch/core/network/dio_client.dart';
 import 'package:bloc_clean_arch/core/network/socket_io_client.dart';
 import 'package:bloc_clean_arch/core/theme/cubit/theme_cubit.dart';
 import 'package:bloc_clean_arch/core/theme/repository/theme_repository.dart';
-import 'package:bloc_clean_arch/features/auth/data/data_source/auth_api_service.dart';
-import 'package:bloc_clean_arch/features/auth/data/data_source/auth_local_service.dart';
-import 'package:bloc_clean_arch/core/network/auth_token_manager.dart';
-import 'package:bloc_clean_arch/features/auth/data/repository/auth_repository_impl.dart';
-import 'package:bloc_clean_arch/features/auth/domain/repository/auth_repository.dart';
-import 'package:bloc_clean_arch/features/auth/domain/usecase/is_logged_in.dart';
-import 'package:bloc_clean_arch/features/auth/domain/usecase/logout.dart';
-import 'package:bloc_clean_arch/features/auth/domain/usecase/login.dart';
-import 'package:bloc_clean_arch/features/auth/domain/usecase/signup.dart';
+import 'package:bloc_clean_arch/features/auth/data/datasources/auth_datasource.dart';
+import 'package:bloc_clean_arch/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:bloc_clean_arch/features/auth/domain/repositories/auth_repository.dart';
+import 'package:bloc_clean_arch/features/auth/domain/usecases/is_logged_in.dart';
+import 'package:bloc_clean_arch/features/auth/domain/usecases/login.dart';
+import 'package:bloc_clean_arch/features/auth/domain/usecases/logout.dart';
+import 'package:bloc_clean_arch/features/auth/domain/usecases/signup.dart';
+import 'package:bloc_clean_arch/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:bloc_clean_arch/core/shared_preferences/auth_token_manager.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/data/datasources/chat_message_datasource.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/data/repositories/chat_message_repository_impl.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/domain/repositories/chat_message_repository.dart';
@@ -68,10 +68,6 @@ void setUpServiceLocator(
   sl.registerSingleton<AuthTokenManager>(AuthTokenManager());
   sl.registerSingleton<DioClient>(DioClient());
 
-  // SERVICES
-
-  sl.registerSingleton<AuthApiService>(AuthApiServiceImpl());
-  sl.registerSingleton<UserApiService>(UserApiServiceImpl());
   // TO DO: pass dependencies via constructor
   // sl.registerSingleton<AuthApiService>(
   //   AuthApiServiceImpl(
@@ -85,44 +81,24 @@ void setUpServiceLocator(
   //   ),
   // );
 
-  // ************************* THEME DI
+  // ************ THEME *****************************
   sl.registerFactory<ThemeRepository>(
       () => ThemeRepository(sharedPreferences: sl<SharedPreferences>()));
-
   sl.registerFactory<ThemeCubit>(() => ThemeCubit(sl<ThemeRepository>()));
 
-  // DATASOURCES
-  sl.registerSingleton<OnboardingLocalDataSource>(OnboardingLocalDataSourceImpl(
-    sharedPreferences: sl<SharedPreferences>(),
-  ));
 
-  //  REPOSITORIES
-  sl.registerSingleton<AuthLocalService>(AuthLocalServiceImpl());
-  sl.registerSingleton<AuthRepository>(AuthRepositoryImpl());
-  sl.registerSingleton<UserRepository>(UserRepositoryImpl());
+
+  // ************ ONBOARDING FEATURE *****************************
+  sl.registerSingleton<OnboardingLocalDataSource>(OnboardingLocalDataSourceImpl(
+    sharedPreferences: sl<SharedPreferences>()));
   sl.registerSingleton<OnboardingRepository>(OnboardingRepositoryImpl(
       localDataSource: sl<OnboardingLocalDataSource>()));
 
-  //================ USECASES
-  sl.registerSingleton<SignupUsecase>(SignupUsecase());
-  sl.registerSingleton<IsLoggedInUsecase>(IsLoggedInUsecase());
-  sl.registerSingleton<LogoutUsecase>(LogoutUsecase());
-  sl.registerSingleton<LoginUsecase>(LoginUsecase());
-  sl.registerSingleton<GetUserProfileUsecase>(GetUserProfileUsecase());
-  // onboarding usecases
   sl.registerSingleton<CheckOnboardingStatusUseCase>(
-    CheckOnboardingStatusUseCase(
-      repository: sl<OnboardingRepository>(),
-    ),
-  );
-
+    CheckOnboardingStatusUseCase(repository: sl<OnboardingRepository>()));
   sl.registerSingleton<CompleteOnboardingUseCase>(
-    CompleteOnboardingUseCase(
-      repository: sl<OnboardingRepository>(),
-    ),
-  );
+    CompleteOnboardingUseCase(repository: sl<OnboardingRepository>()));
 
-  // ============= CUBITS
   sl.registerFactory<OnboardingCubit>(
     () => OnboardingCubit(
       checkOnboardingStatus: sl<CheckOnboardingStatusUseCase>(),
@@ -130,11 +106,40 @@ void setUpServiceLocator(
     ),
   );
 
+  // ************ AUTH FEATURE *****************************
+  sl.registerSingleton<AuthDatasource>(AuthDatasourceImpl(
+      dioClient: sl<DioClient>(), authTokenManager: sl<AuthTokenManager>()));
+  sl.registerSingleton<AuthRepository>(
+      AuthRepositoryImpl(authDatasource: sl<AuthDatasource>()));
+
+  sl.registerSingleton<IsLoggedInUsecase>(
+      IsLoggedInUsecase(authRepository: sl<AuthRepository>()));
+  sl.registerSingleton<LoginUsecase>(
+      LoginUsecase(authRepository: sl<AuthRepository>()));
+  sl.registerSingleton<LogoutUsecase>(
+      LogoutUsecase(authRepository: sl<AuthRepository>()));
+  sl.registerSingleton<SignupUsecase>(
+      SignupUsecase(authRepository: sl<AuthRepository>()));
+
+  sl.registerFactory<AuthCubit>(() => AuthCubit(
+        isLoggedInUsecase: sl<IsLoggedInUsecase>(),
+        loginUsecase: sl<LoginUsecase>(),
+        logoutUsecase: sl<LogoutUsecase>(),
+        signupUsecase: sl<SignupUsecase>(),
+      ));
+
+
+
+
+  //  REPOSITORIES
+  sl.registerSingleton<UserApiService>(UserApiServiceImpl());
+  sl.registerSingleton<UserRepository>(UserRepositoryImpl());
+  sl.registerSingleton<GetUserProfileUsecase>(GetUserProfileUsecase());
+
   // ************ NEWS FEATURE *****************************
 
   sl.registerSingleton<ArticleRemoteDatasource>(
       ArticleRemoteDatasourceImpl(dioClient: sl<DioClient>()));
-
   sl.registerSingleton<ArticleRepository>(ArticleRepositoryImpl(
       articleRemoteDatasource: sl<ArticleRemoteDatasource>()));
 
@@ -184,39 +189,45 @@ void setUpServiceLocator(
       dummyPostTagsRepository: sl<DummyPostTagsRepository>()));
 
   sl.registerFactory<DummyPostTagsCubit>(() => DummyPostTagsCubit(
-        getDummyPostTagsUseCase: sl<GetDummyPostTagsUseCase>(),
-      ));
+        getDummyPostTagsUseCase: sl<GetDummyPostTagsUseCase>()));
 
   // ---------------- chat messages & sockets
   sl.registerSingleton<SocketIoClient>(
       SocketIoClient(tokenManager: sl<AuthTokenManager>()));
 
-  sl.registerSingleton<ChatMessageDatasource>(
-      ChatMessageDatasourceImpl(socketIoClient: sl<SocketIoClient>(), dioClient: sl<DioClient>()));
+  sl.registerSingleton<ChatMessageDatasource>(ChatMessageDatasourceImpl(
+      socketIoClient: sl<SocketIoClient>(), dioClient: sl<DioClient>()));
 
-  sl.registerSingleton<ChatMessageRepository>(
-      ChatMessageRepositoryImpl(chatMessageDatasource: sl<ChatMessageDatasource>()));
-
+  sl.registerSingleton<ChatMessageRepository>(ChatMessageRepositoryImpl(
+      chatMessageDatasource: sl<ChatMessageDatasource>()));
 
   sl.registerSingleton<ConnectChatMessageSocketUsecase>(
-      ConnectChatMessageSocketUsecase(chatMessageRepository: sl<ChatMessageRepository>()));
+      ConnectChatMessageSocketUsecase(
+          chatMessageRepository: sl<ChatMessageRepository>()));
   sl.registerSingleton<DisconnectChatMessageSocketUsecase>(
-        DisconnectChatMessageSocketUsecase(chatMessageRepository: sl<ChatMessageRepository>()));
+      DisconnectChatMessageSocketUsecase(
+          chatMessageRepository: sl<ChatMessageRepository>()));
   sl.registerSingleton<FetchPreviousChatMessagesUsecase>(
-        FetchPreviousChatMessagesUsecase(chatMessageRepository: sl<ChatMessageRepository>()));
+      FetchPreviousChatMessagesUsecase(
+          chatMessageRepository: sl<ChatMessageRepository>()));
   sl.registerSingleton<SendChatMessageSocketUsecase>(
-      SendChatMessageSocketUsecase(chatMessageRepository: sl<ChatMessageRepository>()));
-  sl.registerSingleton<ListenToChatMessagesUsecase>(
-    ListenToChatMessagesUsecase(chatMessageRepository: sl<ChatMessageRepository>()));
-  sl.registerSingleton<InitializeSocketConnectionUsecase>(InitializeSocketConnectionUsecase(
+      SendChatMessageSocketUsecase(
+          chatMessageRepository: sl<ChatMessageRepository>()));
+  sl.registerSingleton<ListenToChatMessagesUsecase>(ListenToChatMessagesUsecase(
       chatMessageRepository: sl<ChatMessageRepository>()));
+  sl.registerSingleton<InitializeSocketConnectionUsecase>(
+      InitializeSocketConnectionUsecase(
+          chatMessageRepository: sl<ChatMessageRepository>()));
 
   sl.registerFactory<ChatSocketBloc>(() => ChatSocketBloc(
-      sendChatMessageUsecase: sl<SendChatMessageSocketUsecase>(),
-      disconnectChatMessageSocketUsecase: sl<DisconnectChatMessageSocketUsecase>(),
-      connectChatMessageSocketUsecase: sl<ConnectChatMessageSocketUsecase>(),
-      fetchPreviousChatMessagesUsecase: sl<FetchPreviousChatMessagesUsecase>(),
-      listenToChatMessagesUsecase: sl<ListenToChatMessagesUsecase>(),
-      initializeSocketConnectionUsecase: sl<InitializeSocketConnectionUsecase>(),
-    ));
+        sendChatMessageUsecase: sl<SendChatMessageSocketUsecase>(),
+        disconnectChatMessageSocketUsecase:
+            sl<DisconnectChatMessageSocketUsecase>(),
+        connectChatMessageSocketUsecase: sl<ConnectChatMessageSocketUsecase>(),
+        fetchPreviousChatMessagesUsecase:
+            sl<FetchPreviousChatMessagesUsecase>(),
+        listenToChatMessagesUsecase: sl<ListenToChatMessagesUsecase>(),
+        initializeSocketConnectionUsecase:
+            sl<InitializeSocketConnectionUsecase>(),
+      ));
 }

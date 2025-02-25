@@ -50,14 +50,14 @@ class DummyPostModel {
         "userId": userId,
       };
   DummyPost toEntity() => DummyPost(
-      id: id,
-      title: title,
-      body: body,
-      tags: tags,
-      reactions: reactions.toEntity(),
-      views: views,
-      userId: userId,
-  );
+        id: id,
+        title: title,
+        body: body,
+        tags: tags,
+        reactions: reactions.toEntity(),
+        views: views,
+        userId: userId,
+      );
 }
 
 class ReactionsModel {

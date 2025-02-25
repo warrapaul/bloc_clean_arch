@@ -1,6 +1,6 @@
 import 'package:bloc_clean_arch/common/widgets/error_view.dart';
-import 'package:bloc_clean_arch/common/widgets/search/ad_bloc_search_delegate.dart';
-import 'package:bloc_clean_arch/common/widgets/search/simple_bloc_search_delegate.dart';
+import 'package:bloc_clean_arch/common/widgets/tuts/search/ad_bloc_search_delegate.dart';
+import 'package:bloc_clean_arch/common/widgets/tuts/search/simple_bloc_search_delegate.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/filter_dummy_posts_req_params.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/domain/entities/dummy_post.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/domain/entities/dummy_post_tag.dart';

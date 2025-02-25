@@ -5,7 +5,8 @@ import 'package:bloc_clean_arch/core/configs/routes/route_groups/c_widget_routes
 import 'package:bloc_clean_arch/core/configs/routes/route_groups/news_routes.dart';
 import 'package:bloc_clean_arch/core/configs/routes/route_groups/user_routes.dart';
 import 'package:bloc_clean_arch/core/firebase/screens/notifications_page.dart';
-import 'package:bloc_clean_arch/features/auth/presentation/bloc/auth/auth_cubit.dart';
+import 'package:bloc_clean_arch/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:bloc_clean_arch/features/autha/presentation/bloc/auth/autha_cubit.dart';
 import 'package:bloc_clean_arch/features/home/presentation/pages/home.dart';
 import 'package:bloc_clean_arch/features/on_boarding/presentation/cubit/onboarding_cubit.dart';
 import 'package:bloc_clean_arch/features/on_boarding/presentation/cubit/onboarding_state.dart';
@@ -89,7 +90,7 @@ class AppRoutePaths {
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: AppRoutePaths.initialRoute,
+    // initialLocation: AppRoutePaths.initialRoute,
     errorBuilder: (context, state) => const NotFoundPage(),
     routes: <GoRoute>[
       GoRoute(
@@ -109,44 +110,43 @@ class AppRouter {
       //news api and dummy posts
       ...NewsRoutes.routes,
     ],
-    // redirect: (BuildContext context, GoRouterState state) {
-    //   final authCubit = context.read<AuthCubit>();
-    //   final onboardingCubit = context.read<OnboardingCubit>();
+    redirect: (BuildContext context, GoRouterState state) {
+      final authCubit = context.read<AuthCubit>();
+      final onboardingCubit = context.read<OnboardingCubit>();
 
-    //   final bool isAuthenticated = authCubit.state is AuthenticatedState;
-    //   final bool hasCompletedOnboarding =
-    //       onboardingCubit.state is OnboardingCompleted;
+      final bool isAuthenticated = authCubit.state is Authenticated;
+      final bool hasCompletedOnboarding = onboardingCubit.state is OnboardingCompleted;
 
-    //   final bool isOnboardingRoute =
-    //       state.matchedLocation == AppRoutePaths.onBoarding;
-    //   final bool isLoginRoute = state.matchedLocation == AppRoutePaths.login;
-    //   final bool isSignupRoute = state.matchedLocation == AppRoutePaths.signup;
-    //   final bool isPublicRoute =
-    //       AppRoutePaths.publicRoutes.contains(state.matchedLocation);
+      final bool isOnboardingRoute =
+          state.matchedLocation == AppRoutePaths.onBoarding;
+      final bool isLoginRoute = state.matchedLocation == AppRoutePaths.login;
+      final bool isSignupRoute = state.matchedLocation == AppRoutePaths.signup;
+      final bool isPublicRoute =
+          AppRoutePaths.publicRoutes.contains(state.matchedLocation);
 
-    //   // // TO DO: DELETE THIS GLOBAL OVERRIDE
-    //   // return AppRoutePaths.initialRoute;
+      // // TO DO: DELETE THIS GLOBAL OVERRIDE
+      // return AppRoutePaths.initialRoute;
 
-    //   // check onboarding status
-    //   if (!hasCompletedOnboarding && !isOnboardingRoute) {
-    //     return AppRoutePaths.onBoarding;
-    //   }
+      // check onboarding status
+      if (!hasCompletedOnboarding && !isOnboardingRoute) {
+        return AppRoutePaths.onBoarding;
+      }
 
-    //   // CONTROL SCREENS THAT UNAUTHENTICATED USER CAN ACCESS (AuthInterceptor for routes)
-    //   if (!isAuthenticated) {
-    //     if (isPublicRoute) {
-    //       // Allow access to public routes
-    //       return null;
-    //     }
-    //     return AppRoutePaths.login; // Redirect to login for non-public routes
-    //   }
+      // CONTROL SCREENS THAT UNAUTHENTICATED USER CAN ACCESS (AuthInterceptor for routes)
+      if (!isAuthenticated) {
+        if (isPublicRoute) {
+          // Allow access to public routes
+          return null;
+        }
+        return AppRoutePaths.login; // Redirect to login for non-public routes
+      }
 
-    //   // Redirect authenticated users away from login/signup
-    //   if (isAuthenticated && (isLoginRoute || isSignupRoute)) {
-    //     return AppRoutePaths.initialRoute;
-    //   }
+      // Redirect authenticated users away from login/signup
+      if (isAuthenticated && (isLoginRoute || isSignupRoute)) {
+        return AppRoutePaths.initialRoute;
+      }
 
-    //   return null;
-    // },
+      return null;
+    },
   );
 }

@@ -1,5 +1,5 @@
 import 'package:bloc_clean_arch/core/constants/api_urls_constants.dart';
-import 'package:bloc_clean_arch/core/network/auth_token_manager.dart';
+import 'package:bloc_clean_arch/core/shared_preferences/auth_token_manager.dart';
 import 'package:bloc_clean_arch/service_locator.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
@@ -19,10 +19,13 @@ class LoggerInterceptor extends Interceptor {
 
     try {
       final responseData = err.response?.data;
-      final message = responseData is Map ? responseData['message'] : null;    // Extract server message if available
-      final serverMessage = message is List    // if msg is a list convert to string
-          ? message.join(', ')
-          : message?.toString() ?? "No server message";
+      final message = responseData is Map
+          ? responseData['message']
+          : null; // Extract server message if available
+      final serverMessage =
+          message is List // if msg is a list convert to string
+              ? message.join(', ')
+              : message?.toString() ?? "No server message";
 
       logger.e('''
           HTTP REQUEST ERROR
@@ -44,18 +47,16 @@ class LoggerInterceptor extends Interceptor {
           Method: ${options.method}
           Error Type: ${err.type}
           Response: ${err.response?.data}
-          
+
           Payload: ${options.data ?? "No Payload"}
           Error Message: ${err.message}
           Error in onError: $e       
           Stack trace: $stackTrace   
-      '''); 
+      ''');
 
-      handler.next(err); 
+      handler.next(err);
     }
   }
-
-
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
@@ -93,7 +94,7 @@ class AuthInterceptor extends Interceptor {
       return handler.next(options);
     }
 
-    final token = await _tokenManager.getToken();
+    final token = await _tokenManager.getAccessToken();
     if (token != null) {
       options.headers['Authorization'] = 'Bearer $token';
     }

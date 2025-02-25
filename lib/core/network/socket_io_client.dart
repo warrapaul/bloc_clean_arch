@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:bloc_clean_arch/core/constants/api_urls_constants.dart';
-import 'package:bloc_clean_arch/core/network/auth_token_manager.dart';
+import 'package:bloc_clean_arch/core/shared_preferences/auth_token_manager.dart';
 import 'package:bloc_clean_arch/core/network/soket_io_logger.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 

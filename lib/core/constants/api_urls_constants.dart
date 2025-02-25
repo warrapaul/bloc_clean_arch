@@ -1,7 +1,7 @@
 class ApiUrlsConstants {
   // static const baseUrl = 'http://localhost:3000/proj/';
-  // static const baseUrl = 'https://poodle-lasting-tadpole.ngrok-free.app/proj/';
-  static const baseUrl = 'https://httpstat.us/500/';
+  static const baseUrl = 'https://poodle-lasting-tadpole.ngrok-free.app/proj/';
+  // static const baseUrl = 'https://httpstat.us/500/';
   // ngrok http --url=poodle-lasting-tadpole.ngrok-free.app 80
   // static const baseUrl = 'https://dummyjson.com/';
   // static const baseUrl = 'https://newsapi.org/v2/';

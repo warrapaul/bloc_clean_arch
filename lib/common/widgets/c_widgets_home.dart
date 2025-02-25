@@ -1,10 +1,10 @@
-import 'package:bloc_clean_arch/common/widgets/navigation/basic_screens/account.dart';
-import 'package:bloc_clean_arch/common/widgets/navigation/basic_screens/home.dart';
-import 'package:bloc_clean_arch/common/widgets/navigation/basic_screens/messages.dart';
-import 'package:bloc_clean_arch/common/widgets/navigation/basic_screens/notifications.dart';
-import 'package:bloc_clean_arch/common/widgets/navigation/components/c_bottom_nav.dart';
-import 'package:bloc_clean_arch/common/widgets/navigation/components/c_navigation_drawer.dart';
-import 'package:bloc_clean_arch/common/widgets/navigation/components/c_popup_anchor_menu.dart';
+import 'package:bloc_clean_arch/common/widgets/tuts/navigation/basic_screens/account.dart';
+import 'package:bloc_clean_arch/common/widgets/tuts/navigation/basic_screens/home.dart';
+import 'package:bloc_clean_arch/common/widgets/tuts/navigation/basic_screens/messages.dart';
+import 'package:bloc_clean_arch/common/widgets/tuts/navigation/basic_screens/notifications.dart';
+import 'package:bloc_clean_arch/common/widgets/tuts/navigation/components/c_bottom_nav.dart';
+import 'package:bloc_clean_arch/common/widgets/tuts/navigation/components/c_navigation_drawer.dart';
+import 'package:bloc_clean_arch/common/widgets/tuts/navigation/components/c_popup_anchor_menu.dart';
 import 'package:flutter/material.dart';
 
 /*

@@ -2,8 +2,7 @@ import 'package:bloc_clean_arch/core/configs/routes/app_routes.dart';
 import 'package:bloc_clean_arch/core/theme/app_theme.dart';
 import 'package:bloc_clean_arch/core/theme/cubit/theme_cubit.dart';
 import 'package:bloc_clean_arch/core/theme/custom_styles/del_custom_theme_data.dart';
-import 'package:bloc_clean_arch/features/auth/presentation/bloc/auth/auth_cubit.dart';
-import 'package:bloc_clean_arch/features/dummy_posts/data/models/filter_dummy_posts_req_params.dart';
+import 'package:bloc_clean_arch/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/bloc/dummy_posts_search_bloc.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/cubit/dummy_post_tags/dummy_post_tags_cubit.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/cubit/dummy_posts/dummy_posts_cubit.dart';
@@ -22,7 +21,7 @@ class App extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => sl<ThemeCubit>()..initializeTheme()),
         BlocProvider(
-          create: (context) => AuthCubit()..appStarted(),
+          create: (context) => sl<AuthCubit>()..checkAuthStatus(),
         ),
         BlocProvider(
           create: (context) => sl<OnboardingCubit>()..checkStatus(),
