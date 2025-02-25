@@ -3,7 +3,6 @@ import 'package:bloc_clean_arch/common/widgets/buttons/app_loading_button.dart';
 import 'package:bloc_clean_arch/core/configs/routes/app_routes.dart';
 import 'package:bloc_clean_arch/core/theme/cubit/theme_cubit.dart';
 import 'package:bloc_clean_arch/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:bloc_clean_arch/features/autha/domain/usecase/logout.dart';
 import 'package:bloc_clean_arch/features/users/presentation/bloc/cubit/user_profile/user_profile_cubit.dart';
 import 'package:bloc_clean_arch/service_locator.dart';
 import 'package:flutter/material.dart';

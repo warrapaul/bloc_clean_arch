@@ -6,7 +6,6 @@ import 'package:bloc_clean_arch/core/configs/routes/route_groups/news_routes.dar
 import 'package:bloc_clean_arch/core/configs/routes/route_groups/user_routes.dart';
 import 'package:bloc_clean_arch/core/firebase/screens/notifications_page.dart';
 import 'package:bloc_clean_arch/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:bloc_clean_arch/features/autha/presentation/bloc/auth/autha_cubit.dart';
 import 'package:bloc_clean_arch/features/home/presentation/pages/home.dart';
 import 'package:bloc_clean_arch/features/on_boarding/presentation/cubit/onboarding_cubit.dart';
 import 'package:bloc_clean_arch/features/on_boarding/presentation/cubit/onboarding_state.dart';
