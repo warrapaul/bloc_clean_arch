@@ -1,7 +1,6 @@
 import 'package:bloc_clean_arch/core/configs/routes/app_routes.dart';
 import 'package:bloc_clean_arch/core/theme/app_theme.dart';
 import 'package:bloc_clean_arch/core/theme/cubit/theme_cubit.dart';
-import 'package:bloc_clean_arch/core/theme/custom_styles/del_custom_theme_data.dart';
 import 'package:bloc_clean_arch/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/bloc/dummy_posts_search_bloc.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/cubit/dummy_post_tags/dummy_post_tags_cubit.dart';

@@ -7,12 +7,12 @@ class ConfirmationDialog extends StatelessWidget {
   final VoidCallback onCancel;
 
   const ConfirmationDialog({
-    Key? key,
+    super.key,
     required this.title,
     required this.message,
     required this.onConfirm,
     required this.onCancel,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +28,19 @@ class ConfirmationDialog extends StatelessWidget {
 
   Widget contentBox(context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(color: Colors.black, offset: Offset(0, 10), blurRadius: 10),
         ],
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          CircleAvatar(
+          const CircleAvatar(
             backgroundColor: Colors.blue,
             radius: 30,
             child: Icon(
@@ -49,18 +49,18 @@ class ConfirmationDialog extends StatelessWidget {
               size: 30,
             ),
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Text(
             title,
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Text(
             message,
-            style: TextStyle(fontSize: 14),
+            style: const TextStyle(fontSize: 14),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -69,14 +69,14 @@ class ConfirmationDialog extends StatelessWidget {
                   style: TextButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
-                      side: BorderSide(color: Colors.blue),
+                      side: const BorderSide(color: Colors.blue),
                     ),
                   ),
                   onPressed: onCancel,
-                  child: Text("NO", style: TextStyle(color: Colors.blue)),
+                  child: const Text("NO", style: TextStyle(color: Colors.blue)),
                 ),
               ),
-              SizedBox(width: 15),
+              const SizedBox(width: 15),
               Expanded(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -86,7 +86,7 @@ class ConfirmationDialog extends StatelessWidget {
                     ),
                   ),
                   onPressed: onConfirm,
-                  child: Text("YES", style: TextStyle(color: Colors.white)),
+                  child: const Text("YES", style: TextStyle(color: Colors.white)),
                 ),
               ),
             ],

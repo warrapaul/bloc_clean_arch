@@ -7,7 +7,7 @@ part 'theme_state.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
   final ThemeRepository _repository;
-  ThemeCubit(this._repository) : super(ThemeState(themeMode: ThemeMode.system));
+  ThemeCubit(this._repository) : super(const ThemeState(themeMode: ThemeMode.system));
 
   void toggleTheme() {
     final newMode =

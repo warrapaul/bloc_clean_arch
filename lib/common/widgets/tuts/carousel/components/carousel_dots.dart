@@ -78,9 +78,9 @@ class _CarouselDotsState extends State<CarouselDots> {
         IconButton(
             onPressed: () {
               controller.nextPage(
-                  duration: Duration(milliseconds: 200), curve: Curves.linear);
+                  duration: const Duration(milliseconds: 200), curve: Curves.linear);
             },
-            icon: Icon(Icons.arrow_back)),
+            icon: const Icon(Icons.arrow_back)),
         AnimatedSmoothIndicator(
           activeIndex: activeIndex,
           count: countries.length,

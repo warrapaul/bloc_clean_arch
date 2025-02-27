@@ -21,30 +21,30 @@ class _BasicTabBarsState extends State<BasicTabBars> {
           appBar: AppBar(
             bottom: TabBar(
               tabs: [
-               Tab(
+               const Tab(
                 icon: Icon(Icons.home),
                 text: 'Home',
               ),
               // Notifications tab
-              Tab(
+              const Tab(
                 icon: Icon(Icons.notifications_outlined),
                 text: 'Notifications',
               ),
               // Account tab
-              Tab(
+              const Tab(
                 icon: Icon(Icons.person),
                 text: 'Account',
               ),
                Tab(
                 icon: Badge.count(
                   count: 2,
-                  child: Icon(Icons.message_outlined),
+                  child: const Icon(Icons.message_outlined),
                 ),
                 text: 'Messages',
               ),
             ]),
           ),
-          body: TabBarView(children: [
+          body: const TabBarView(children: [
             BasicHome(),
             BasicNotifications(),
             BasicAccount(),

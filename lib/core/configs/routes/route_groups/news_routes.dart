@@ -11,17 +11,17 @@ class NewsRoutes {
     GoRoute(
       name: AppRoutePaths.newsEverything,
       path: AppRoutePaths.newsEverything,
-      builder: (context, state) => NewsHomePage(),
+      builder: (context, state) => const NewsHomePage(),
     ),
     GoRoute(
       name: AppRoutePaths.newsSearch,
       path: AppRoutePaths.newsSearch,
-      builder: (context, state) => NewsSearchHomePage(),
+      builder: (context, state) => const NewsSearchHomePage(),
     ),
     GoRoute(
         path: AppRoutePaths.dummyPosts,
         name: AppRoutePaths.dummyPosts,
-        builder: (context, state) => DummyPostsPage()),
+        builder: (context, state) => const DummyPostsPage()),
     GoRoute(
         path: AppRoutePaths.dummyPostDetail,
         name: AppRoutePaths.dummyPostDetailName,
@@ -32,7 +32,7 @@ class NewsRoutes {
     GoRoute(
         path: AppRoutePaths.dummyPostsHome,
         name: AppRoutePaths.dummyPostsHome,
-        builder: (context, state) => DummyPostsHomePage())
+        builder: (context, state) => const DummyPostsHomePage())
 
     // GoRoute(
     //   name: AppRoutePaths.dummyPosts,

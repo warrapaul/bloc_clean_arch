@@ -5,7 +5,6 @@ import 'package:bloc_clean_arch/features/auth/domain/usecases/is_logged_in.dart'
 import 'package:bloc_clean_arch/features/auth/domain/usecases/login.dart';
 import 'package:bloc_clean_arch/features/auth/domain/usecases/logout.dart';
 import 'package:bloc_clean_arch/features/auth/domain/usecases/signup.dart';
-import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 
 part 'auth_state.dart';

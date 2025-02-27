@@ -8,7 +8,7 @@ import 'package:bloc_clean_arch/common/widgets/tuts/forms/widets/custom_text_for
 import 'package:flutter/material.dart';
 
 class BasicForm1 extends StatefulWidget {
-  BasicForm1({super.key});
+  const BasicForm1({super.key});
 
   @override
   State<BasicForm1> createState() => _BasicForm1State();
@@ -121,7 +121,7 @@ class _BasicForm1State extends State<BasicForm1> {
               const SizedBox(height: 20),
               const CustomDisabledTextFormField(value: 'test disabled'),
               const SizedBox(height: 20),
-              Text('Using List:'),
+              const Text('Using List:'),
               CustomDropdownMenu(
                 hintText: 'List Regions',
                 items: _regions,
@@ -130,7 +130,7 @@ class _BasicForm1State extends State<BasicForm1> {
                 },
                 controller: _regionsListController,
               ),
-              Text('Using Maps:'),
+              const Text('Using Maps:'),
               CustomDropdownMenu(
                 hintText: 'Map Regions',
                 items: _regs,
@@ -143,7 +143,7 @@ class _BasicForm1State extends State<BasicForm1> {
 
               const SizedBox(height: 20),
 
-              Text('DropdownButton List:'),
+              const Text('DropdownButton List:'),
               CustomDropdownButton(
                 hintText: 'List Regions',
                 items: _regions,
@@ -152,7 +152,7 @@ class _BasicForm1State extends State<BasicForm1> {
                 },
                 controller: _regionsListController,
               ),
-              Text('DropdownButton Maps:'),
+              const Text('DropdownButton Maps:'),
               CustomDropdownButton(
                 hintText: 'Map Regions',
                 items: _regs,

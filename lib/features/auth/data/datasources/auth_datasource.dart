@@ -2,11 +2,9 @@ import 'package:bloc_clean_arch/core/constants/api_urls_constants.dart';
 import 'package:bloc_clean_arch/core/network/dio_client.dart';
 import 'package:bloc_clean_arch/core/network/dio_execption_handlers.dart';
 import 'package:bloc_clean_arch/core/shared_preferences/auth_token_manager.dart';
-import 'package:bloc_clean_arch/core/shared_preferences/shared_pref_exception.dart';
 import 'package:bloc_clean_arch/features/auth/data/models/auth_model.dart';
 import 'package:bloc_clean_arch/features/auth/data/models/login_req_dto.dart';
 import 'package:bloc_clean_arch/features/auth/data/models/signup_req_dto.dart';
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 abstract class AuthDatasource {

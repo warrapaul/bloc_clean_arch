@@ -19,17 +19,17 @@ class ButtonHome extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () {},
-                  child: Text('cancel'),
+                  child: const Text('cancel'),
                 ),
                 ElevatedButton(
                   onPressed: () {
                    
                   },
-                  child: Text('Ok'),
+                  child: const Text('Ok'),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             

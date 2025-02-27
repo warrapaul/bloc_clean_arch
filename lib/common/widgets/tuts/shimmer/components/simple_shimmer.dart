@@ -75,14 +75,14 @@ class _ShimmerLoadingState extends State<_ShimmerLoading>
             0,
           ),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: const [
+                colors: [
                   Colors.transparent,
                   Color(0x50FFFFFF),
                   Colors.transparent,
                 ],
-                stops: const [0.0, 0.5, 1.0],
+                stops: [0.0, 0.5, 1.0],
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
               ),

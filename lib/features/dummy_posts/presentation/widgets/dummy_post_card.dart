@@ -1,5 +1,4 @@
 import 'package:bloc_clean_arch/core/configs/routes/app_routes.dart';
-import 'package:bloc_clean_arch/core/firebase/screens/notifications_page.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/domain/entities/dummy_post.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

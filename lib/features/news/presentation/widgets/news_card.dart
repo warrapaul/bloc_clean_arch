@@ -7,7 +7,7 @@ import 'package:bloc_clean_arch/features/news/domain/entities/article.dart';
 class NewsCard extends StatelessWidget {
   final Article article;
 
-  const NewsCard({Key? key, required this.article}) : super(key: key);
+  const NewsCard({super.key, required this.article});
 
   // void _launchUrl(String url) async {
   //   final uri = Uri.parse(url);

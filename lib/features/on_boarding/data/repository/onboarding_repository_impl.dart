@@ -1,7 +1,6 @@
 import 'package:bloc_clean_arch/core/error/failure.dart';
 import 'package:bloc_clean_arch/features/on_boarding/data/data_sources/onboarding_local_datasource.dart';
 import 'package:bloc_clean_arch/features/on_boarding/domain/repository/onboarding_repository.dart';
-import 'package:bloc_clean_arch/service_locator.dart';
 import 'package:dartz/dartz.dart';
 
 class OnboardingRepositoryImpl implements OnboardingRepository {

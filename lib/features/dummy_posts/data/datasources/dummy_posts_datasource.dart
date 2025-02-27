@@ -2,7 +2,6 @@ import 'package:bloc_clean_arch/core/constants/api_urls_constants.dart';
 import 'package:bloc_clean_arch/core/network/dio_client.dart';
 import 'package:bloc_clean_arch/core/network/dio_execption_handlers.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/dummy_post_model.dart';
-import 'package:bloc_clean_arch/features/dummy_posts/data/models/dummy_post_tag_model.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/filter_dummy_posts_req_params.dart';
 import 'package:dio/dio.dart';
 

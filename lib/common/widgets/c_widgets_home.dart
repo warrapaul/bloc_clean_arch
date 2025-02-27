@@ -95,7 +95,7 @@ class _HomePageState extends State<CWidgetsHome> {
           //  CPopupMenu()
         ],
       ),
-      drawer: CNavigationDrawer(),
+      drawer: const CNavigationDrawer(),
       bottomNavigationBar: CBottomNav(
         selectedIndex: currentPageIndex,
         onDestinationSelected: (int index) {

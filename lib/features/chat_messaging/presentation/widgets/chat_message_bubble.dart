@@ -219,7 +219,7 @@ class ChatMessageBubble extends StatelessWidget {
       backgroundColor: Colors.grey.shade500,
       child: Text(
         user,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.white,
           fontSize: 14,
           fontWeight: FontWeight.w500,

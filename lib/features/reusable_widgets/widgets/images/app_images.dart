@@ -22,7 +22,7 @@ class AppImagesPage extends StatelessWidget {
               // =============================== BANNER ============================
               const SizedBox(height: 20),
               const Text('Banner'),
-              Container(
+              SizedBox(
                 height: 200,
                 width: double.infinity,
                 child: Image.network(
@@ -30,10 +30,10 @@ class AppImagesPage extends StatelessWidget {
                   fit: BoxFit.cover, // Makes image cover the container
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) return child;
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   },
                   errorBuilder: (context, error, stackTrace) {
-                    return Icon(Icons.error);
+                    return const Icon(Icons.error);
                   },
                 ),
               ),

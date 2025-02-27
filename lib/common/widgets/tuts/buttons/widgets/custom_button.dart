@@ -11,14 +11,14 @@ class CustomButton extends StatelessWidget {
   final bool isLoading;
 
   const CustomButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
     this.size = ButtonSizesEnums.small,
     this.type = ButtonTypeEnums.primary,
     this.shape = ButtonShapeEnums.normal,
     this.isLoading = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class CustomButton extends StatelessWidget {
           shape: shape,
         ).copyWith(
           side: WidgetStateProperty.all(
-              BorderSide(color: AppColors.primaryColor)),
+              const BorderSide(color: AppColors.primaryColor)),
         );
       case ButtonTypeEnums.disabled:
         return CustomButtonTheme.buttonStyle(

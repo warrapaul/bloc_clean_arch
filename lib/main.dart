@@ -28,7 +28,7 @@ void main() async{
   // await FirebaseNotificationService.instance.setup();
 
 
-  runApp(App());
+  runApp(const App());
 }
 
 

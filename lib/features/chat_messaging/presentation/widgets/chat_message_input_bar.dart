@@ -10,8 +10,8 @@ class ChatMessageInputBar extends StatefulWidget {
 
 class _ChatMessageInputBarState extends State<ChatMessageInputBar> {
   bool _showEmojiPicker = false;
-  TextEditingController _controller = TextEditingController();
-  FocusNode _focusNode = FocusNode();
+  final TextEditingController _controller = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
@@ -131,7 +131,7 @@ class _ChatMessageInputBarState extends State<ChatMessageInputBar> {
                 // onEmojiSelected: (category, emoji) => {
                 //   _controller.text += emoji.emoji
                 // },
-                config: Config(),
+                config: const Config(),
               ),
             )
           ],
@@ -164,7 +164,7 @@ class _ChatMessageInputBarState extends State<ChatMessageInputBar> {
                 MediaQuery.of(context).size.height * 0.35, 
             padding: const EdgeInsets.only(top: 10),
             margin: const EdgeInsets.symmetric(horizontal: 8),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             ),
@@ -252,7 +252,7 @@ class _ChatMessageInputBarState extends State<ChatMessageInputBar> {
           const SizedBox(height: 8),
           Text(
             title,
-            style: TextStyle(fontSize: 12),
+            style: const TextStyle(fontSize: 12),
             textAlign: TextAlign.center,
           )
         ],

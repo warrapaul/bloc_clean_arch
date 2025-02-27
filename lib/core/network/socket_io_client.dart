@@ -12,17 +12,12 @@ class SocketIoClient {
   Future<void> get initialized => _initCompleter.future;
   int _reconnectionAttempts = 0;
 
-  SocketIoClient({required this.tokenManager}) {}
+  SocketIoClient({required this.tokenManager});
 
   Future<void> initSocket() async {
     try {
       const authToken =
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYTMyNThkNy0zOTExLTQzYzMtOTNiZC03NDEyODE5ZTUyYTIiLCJlbWFpbCI6IndhcmFwYXVsQGdtYWlsLmNvbSIsImlhdCI6MTczOTYyMTcyNCwiZXhwIjoxNzQ1NjY5NzI0fQ.dwBW20rft-Y__D35D9OjoFIL3zVk0qMIhp_4Su7Mm64';
-      // final authToken = await tokenManager.getToken();
-
-      if (authToken == null) {
-        throw Exception('No auth token available');
-      }
 
       final options = {
         'path': ApiUrlsConstants.socketPath,

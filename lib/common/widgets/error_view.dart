@@ -4,7 +4,7 @@ class ErrorViewWidget extends StatelessWidget {
   final String message;
   // final VoidCallback onRetry;
 
-  const ErrorViewWidget({
+  const ErrorViewWidget({super.key, 
     required this.message,
     // required this.onRetry,
   });

@@ -8,7 +8,7 @@ class AppWidgetsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppAppbar(),
+      appBar: const AppAppbar(),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
@@ -16,9 +16,9 @@ class AppWidgetsPage extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => AppImagesPage()));
+                      MaterialPageRoute(builder: (context) => const AppImagesPage()));
                 },
-                child: Text('Images'))
+                child: const Text('Images'))
           ],
         ),
       )),

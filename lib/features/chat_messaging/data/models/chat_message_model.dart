@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:bloc_clean_arch/features/chat_messaging/domain/entity/chat_message.dart';
 

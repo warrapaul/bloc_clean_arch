@@ -2,13 +2,11 @@ import 'dart:async';
 
 import 'package:bloc_clean_arch/core/constants/api_urls_constants.dart';
 import 'package:bloc_clean_arch/core/constants/socket_events_constants.dart';
-import 'package:bloc_clean_arch/core/error/failure.dart';
 import 'package:bloc_clean_arch/core/network/dio_client.dart';
 import 'package:bloc_clean_arch/core/network/socket_io_client.dart';
 import 'package:bloc_clean_arch/core/network/socket_io_exception_handlers.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/data/models/chat_message_model.dart';
 import 'package:bloc_clean_arch/features/chat_messaging/data/models/filter_chat_messages_req_params.dart';
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 abstract class ChatMessageDatasource {

@@ -14,11 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-/**
- * pushNamed - add page to navigation stack, allowing to go back
- * goNamed - replace current page on navigation stack, does not allow users
- *            to go back - same as pushReplacement
- */
+/// pushNamed - add page to navigation stack, allowing to go back
+/// goNamed - replace current page on navigation stack, does not allow users
+///            to go back - same as pushReplacement
 
 class AppRoutePaths {
   static const String onBoarding = '/onBoarding';

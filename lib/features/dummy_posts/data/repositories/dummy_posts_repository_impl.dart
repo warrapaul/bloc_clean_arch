@@ -1,4 +1,3 @@
-import 'package:bloc_clean_arch/core/error/failure.dart';
 import 'package:bloc_clean_arch/core/network/dio_execption_handlers.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/datasources/dummy_posts_datasource.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/dummy_post_model.dart';

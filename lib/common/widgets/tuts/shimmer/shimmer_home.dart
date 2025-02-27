@@ -51,7 +51,7 @@ class ShimmerHome extends StatelessWidget {
                const SizedBox(height: 5),
               const Text('List of Basic shimmers'),
               const SizedBox(height: 10),
-              Container( 
+              SizedBox( 
                 height: 200,
                 child: ListView.builder(
                   itemCount: 10,
@@ -91,7 +91,7 @@ class ShimmerHome extends StatelessWidget {
                   style: TextStyle(fontSize: 40.0),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 400,
                 child:  ListView.builder(
                 itemCount: 10,

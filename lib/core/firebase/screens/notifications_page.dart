@@ -15,7 +15,7 @@ class NotificationsPage extends StatelessWidget {
       leading: IconButton(onPressed: (){
                     context.pushNamed(AppRoutePaths.home);
 
-      }, icon: Icon(Icons.arrow_back)),),
+      }, icon: const Icon(Icons.arrow_back)),),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -23,13 +23,13 @@ class NotificationsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (title != null)
-                Text("Title: $title", style: TextStyle(fontSize: 20)),
+                Text("Title: $title", style: const TextStyle(fontSize: 20)),
               if (body != null)
-                Text("Body: $body", style: TextStyle(fontSize: 16)),
+                Text("Body: $body", style: const TextStyle(fontSize: 16)),
               if (data != null) ...[
                 const SizedBox(height: 10),
                 const Text("Data:", style: TextStyle(fontSize: 18)),
-                Text(data.toString(), style: TextStyle(fontSize: 14)),
+                Text(data.toString(), style: const TextStyle(fontSize: 14)),
               ],
             ],
           ),

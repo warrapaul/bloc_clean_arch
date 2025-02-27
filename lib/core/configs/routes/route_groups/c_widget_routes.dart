@@ -24,77 +24,77 @@ class CWidgetRoutes {
       name: AppRoutePaths.infiniteScrollHomePage,
       path: AppRoutePaths.infiniteScrollHomePage,
       builder: (BuildContext context, GoRouterState state) {
-        return InfiniteScrollHomePage();
+        return const InfiniteScrollHomePage();
       },
     ),
     GoRoute(
       name: AppRoutePaths.appWidgetsHome,
       path: AppRoutePaths.appWidgetsHome,
       builder: (BuildContext context, GoRouterState state) {
-        return AppWidgetsPage();
+        return const AppWidgetsPage();
       },
     ),
     GoRoute(
       name: AppRoutePaths.gridViewHome,
       path: AppRoutePaths.gridViewHome,
       builder: (BuildContext context, GoRouterState state) {
-        return GridViewHome();
+        return const GridViewHome();
       },
     ),
     GoRoute(
       name: AppRoutePaths.cWidgets,
       path: AppRoutePaths.cWidgets,
       builder: (BuildContext context, GoRouterState state) {
-        return CWidgetsHome();
+        return const CWidgetsHome();
       },
     ),
     GoRoute(
       name: AppRoutePaths.crouselSlider,
       path: AppRoutePaths.crouselSlider,
       builder: (BuildContext context, GoRouterState state) {
-        return CCarouselSlider();
+        return const CCarouselSlider();
       },
     ),
     GoRoute(
       name: AppRoutePaths.shimmerHome,
       path: AppRoutePaths.shimmerHome,
       builder: (BuildContext context, GoRouterState state) {
-        return ShimmerHome();
+        return const ShimmerHome();
       },
     ),
     GoRoute(
       name: AppRoutePaths.imagesHome,
       path: AppRoutePaths.imagesHome,
       builder: (BuildContext context, GoRouterState state) {
-        return ImagesHome();
+        return const ImagesHome();
       },
     ),
     GoRoute(
       name: AppRoutePaths.bottomSheetHome,
       path: AppRoutePaths.bottomSheetHome,
       builder: (BuildContext context, GoRouterState state) {
-        return BottomSheetHome();
+        return const BottomSheetHome();
       },
     ),
     GoRoute(
       name: AppRoutePaths.basicTabBars,
       path: AppRoutePaths.basicTabBars,
       builder: (BuildContext context, GoRouterState state) {
-        return BasicTabBars();
+        return const BasicTabBars();
       },
     ),
     GoRoute(
       name: AppRoutePaths.buttonHome,
       path: AppRoutePaths.buttonHome,
       builder: (BuildContext context, GoRouterState state) {
-        return ButtonHome();
+        return const ButtonHome();
       },
     ),
     GoRoute(
       name: AppRoutePaths.dialogHome,
       path: AppRoutePaths.dialogHome,
       builder: (BuildContext context, GoRouterState state) {
-        return DialogHome();
+        return const DialogHome();
       },
     ),
     GoRoute(
@@ -108,7 +108,7 @@ class CWidgetRoutes {
       name: AppRoutePaths.customBadge,
       path: AppRoutePaths.customBadge,
       builder: (BuildContext context, GoRouterState state) {
-        return CustomBadge();
+        return const CustomBadge();
       },
     ),
     GoRoute(
@@ -122,7 +122,7 @@ class CWidgetRoutes {
       name: AppRoutePaths.chatMessaging,
       path: AppRoutePaths.chatMessaging,
       builder: (BuildContext context, GoRouterState state) {
-        return ChatMessageT(); //ChatMessageHomePage();
+        return const ChatMessageT(); //ChatMessageHomePage();
       },
     ),
   ];

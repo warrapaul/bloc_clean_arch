@@ -9,14 +9,14 @@ class CustomDropdownMenu extends StatefulWidget {
   final bool enableFilter;
 
   const CustomDropdownMenu({
-    Key? key,
+    super.key,
     required this.items,
     required this.hintText,
     required this.onChanged,
     required this.controller,
     this.selectedKey,
     this.enableFilter = true,
-  }) : super(key: key);
+  });
 
   @override
   _CustomDropdownMenuState createState() => _CustomDropdownMenuState();
@@ -64,7 +64,7 @@ class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
       controller: widget.controller,
       initialSelection: _selectedValue,
       hintText: widget.hintText,
-      leadingIcon: Icon(Icons.search),
+      leadingIcon: const Icon(Icons.search),
       // trailingIcon: Icon(Icons.chevron_right),
       label: Text(widget.hintText),
       // errorText: '',
@@ -74,12 +74,12 @@ class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
       width: 400,
       dropdownMenuEntries: _dropdownItems,
       enableFilter: widget.enableFilter,
-      inputDecorationTheme: InputDecorationTheme(
+      inputDecorationTheme: const InputDecorationTheme(
         border: OutlineInputBorder(),
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       ),
       menuStyle: MenuStyle(
-        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
+        padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero),
       ),
       searchCallback: (entries, query) {
         final String searchText = widget.controller.value.text.toLowerCase();

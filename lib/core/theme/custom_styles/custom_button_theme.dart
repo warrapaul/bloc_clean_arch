@@ -46,8 +46,8 @@ class CustomButtonTheme {
 
   static final TextButtonThemeData textButtonTheme = TextButtonThemeData(
     style: buttonStyle(
-      backgroundColor: Color(0xFFE0E0E0),
-      foregroundColor: Color(0xFFCE93D8),
+      backgroundColor: const Color(0xFFE0E0E0),
+      foregroundColor: const Color(0xFFCE93D8),
     ),
   );
 
@@ -57,7 +57,7 @@ class CustomButtonTheme {
       backgroundColor: Colors.transparent,
       foregroundColor: AppColors.primaryColor,
     ).copyWith(
-      side: WidgetStateProperty.all(BorderSide(color: AppColors.primaryColor)),
+      side: WidgetStateProperty.all(const BorderSide(color: AppColors.primaryColor)),
     ),
   );
 

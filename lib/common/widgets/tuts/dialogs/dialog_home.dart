@@ -11,7 +11,7 @@ class DialogHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Alert dialogs'),
+          title: const Text('Alert dialogs'),
         ),
         body: SafeArea(
           child: Center(

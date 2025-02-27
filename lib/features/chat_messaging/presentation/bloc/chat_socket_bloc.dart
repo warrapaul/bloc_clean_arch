@@ -36,7 +36,7 @@ class ChatSocketBloc extends Bloc<ChatSocketEvent, ChatSocketState> {
     required this.listenToChatMessagesUsecase,
     required this.initializeSocketConnectionUsecase,
 
-  }) : super(ChatSocketInitial()) {
+  }) : super(const ChatSocketInitial()) {
     on<InitializeChatSocket>(_handleInitializeChatSocket);
     on<ConnectChatSocket>(_handleConnectChatSocket);
     on<DisonnectChatSocket>(_handleDisonnectChatSocket);

@@ -1,15 +1,11 @@
 import 'package:bloc_clean_arch/common/widgets/error_view.dart';
 import 'package:bloc_clean_arch/common/widgets/tuts/search/ad_bloc_search_delegate.dart';
-import 'package:bloc_clean_arch/common/widgets/tuts/search/simple_bloc_search_delegate.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/data/models/filter_dummy_posts_req_params.dart';
-import 'package:bloc_clean_arch/features/dummy_posts/domain/entities/dummy_post.dart';
-import 'package:bloc_clean_arch/features/dummy_posts/domain/entities/dummy_post_tag.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/bloc/dummy_posts_search_bloc.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/cubit/dummy_post_tags/dummy_post_tags_cubit.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/cubit/dummy_posts/dummy_posts_cubit.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/widgets/dummy_post_card.dart';
 import 'package:bloc_clean_arch/features/dummy_posts/presentation/widgets/dummy_post_tags_scroll_view.dart';
-import 'package:bloc_clean_arch/features/dummy_posts/presentation/widgets/dummy_posts_search_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
